@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Traverse the AST of an explanation by kmdr",
   "main": "./src/index.js",
-  "types": "./src/module.d.ts",
   "repository": "git@github.com:ediardo/kmdr-ast.git",
   "author": "Eddie Ramirez <djedi.r@gmail.com>",
   "license": "MIT",
