@@ -179,6 +179,16 @@ export interface ListLeafNodes
     ProgramNode | AssignmentNode | OptionNode | ArgumentNode | OperatorNode
   > {}
 
+export interface PipelineLeafNodes
+  extends Array<
+    | ProgramNode
+    | SubcommandNode
+    | AssignmentNode
+    | OptionNode
+    | ArgumentNode
+    | PipeNode
+  > {}
+
 export interface ASTInstance {
   assignmentHasValue(
     node: AssignmentNode,

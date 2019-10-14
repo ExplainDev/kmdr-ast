@@ -18,8 +18,11 @@ import {
   PipeNode,
   ReservedWordNode,
   CommandLeafNodes,
-  ListLeafNodes
+  ListLeafNodes,
+  PipelineLeafNodes,
+  FlatAST
 } from "./interfaces";
+import { PipelineNode } from ".";
 
 class AST {
   /**
@@ -631,13 +634,15 @@ class AST {
       return AST.flattenCommandNode(node as CommandNode);
     } else if (AST.isList(node)) {
       return AST.flattenListNode(node as ListNode);
+    } else if (AST.isPipeline(node)) {
+      return AST.flattenPipelineNode(node as PipelineNode);
     }
 
     return [];
   }
 
-  private static flattenCommandNode(node: CommandNode): CommandLeafNodes {
-    let flat: CommandLeafNodes = [];
+  private static flattenCommandNode(node: CommandNode): FlatAST {
+    let flat: FlatAST = [];
 
     for (const part of node.parts) {
       if (
@@ -645,7 +650,8 @@ class AST {
         AST.isSubcommand(part) ||
         AST.isAssignment(part) ||
         AST.isOption(part) ||
-        AST.isArgument(part)
+        AST.isArgument(part) ||
+        AST.isRedirect(part)
       ) {
         flat = [...flat, part];
       } else if (part.parts && AST.isStickyOption(part)) {
@@ -656,27 +662,52 @@ class AST {
     return flat;
   }
 
-  private static flattenListNode(node: ListNode): ListLeafNodes {
-    if (!node.parts) {
-      return [];
-    }
-
-    let flat: Array<
-      ProgramNode | AssignmentNode | OptionNode | ArgumentNode | OperatorNode
-    > = [];
+  private static flattenListNode(node: ListNode): FlatAST {
+    let flat: FlatAST = [];
 
     for (const part of node.parts) {
       if (AST.isCommand(part)) {
         const flatCommandNode = AST.flattenCommandNode(part as CommandNode);
         flat = [...flat, ...flatCommandNode];
-      }
-      if (AST.isOperator(part)) {
+      } else if (AST.isOperator(part)) {
         flat = [...flat, part];
       }
     }
 
     return flat;
   }
+
+  private static flattenPipelineNode(node: PipelineNode): FlatAST {
+    let flat: FlatAST = [];
+
+    for (const part of node.parts) {
+      if (AST.isCommand(part)) {
+        const flatCommandNode = AST.flattenCommandNode(part as CommandNode);
+        flat = [...flat, ...flatCommandNode];
+      } else if (AST.isPipe(part)) {
+        flat = [...flat, part];
+      }
+    }
+
+    return flat;
+  }
+
+  /*
+  private static flattenRedirectNode(node: RedirectNode): FlatAST {
+    let flat: FlatAST = [];
+
+    for (const part of node.parts) {
+      if (AST.isCommand(part)) {
+        const flatCommandNode = AST.flattenCommandNode(part as CommandNode);
+        flat = [...flat, ...flatCommandNode];
+      } else if (AST.isPipe(part)) {
+        flat = [...flat, part];
+      }
+    }
+
+    return flat;
+  }
+  */
 }
 
 export default AST;
