@@ -651,7 +651,8 @@ class AST {
         AST.isAssignment(part) ||
         AST.isOption(part) ||
         AST.isArgument(part) ||
-        AST.isRedirect(part)
+        AST.isRedirect(part) ||
+        AST.isSudo(part)
       ) {
         flat = [...flat, part];
       } else if (part.parts && AST.isStickyOption(part)) {
@@ -691,23 +692,6 @@ class AST {
 
     return flat;
   }
-
-  /*
-  private static flattenRedirectNode(node: RedirectNode): FlatAST {
-    let flat: FlatAST = [];
-
-    for (const part of node.parts) {
-      if (AST.isCommand(part)) {
-        const flatCommandNode = AST.flattenCommandNode(part as CommandNode);
-        flat = [...flat, ...flatCommandNode];
-      } else if (AST.isPipe(part)) {
-        flat = [...flat, part];
-      }
-    }
-
-    return flat;
-  }
-  */
 }
 
 export default AST;
