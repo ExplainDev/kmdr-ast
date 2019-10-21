@@ -6,7 +6,7 @@ import { ProgramSchema, OptionSchema } from "kmdr-parser/src/interfaces";
 
 export interface NodeAST {
   kind: string;
-  parts?: any;
+  parts?: any[];
   pos: number[];
   word?: string;
 }
