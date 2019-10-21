@@ -19,6 +19,7 @@
     "typescript": "^3.6.4"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "publish": "yarn run build && np --no-tests"
   }
 }
