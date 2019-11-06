@@ -20,7 +20,8 @@ import {
   CommandLeafNodes,
   ListLeafNodes,
   PipelineLeafNodes,
-  FlatAST
+  FlatAST,
+  OperandNode
 } from "./interfaces";
 import { PipelineNode } from ".";
 
@@ -149,14 +150,10 @@ class AST {
     node: CommandNode,
     programName: string
   ): boolean {
-    if (!node.parts) {
-      return false;
-    }
-
     for (const currentNode of node.parts) {
-      if (AST.isProgram(currentNode as StickyOptionNode)) {
+      if (AST.isProgram(currentNode as ProgramNode)) {
         const programNode = currentNode as ProgramNode;
-        return programNode.programName === programName;
+        return programNode.schema.name === programName;
       }
     }
 
@@ -360,7 +357,13 @@ class AST {
    */
   static getLastNode(
     node: CommandNode | ListNode
-  ): CommandNode | ListNode | WordNode | OperatorNode | undefined {
+  ):
+    | CommandNode
+    | ListNode
+    | WordNode
+    | OperatorNode
+    | OperandNode
+    | undefined {
     if (!node.parts) return;
 
     const lastPos = node.parts.length - 1;
@@ -482,6 +485,10 @@ class AST {
 
   public static isOptionWithArg(node: NodeAST): boolean {
     return node.kind === "optionWithArg";
+  }
+
+  public static isOperand(node: OperandNode): boolean {
+    return node.kind === "operand";
   }
   /**
    * Checks if node is of kind operator

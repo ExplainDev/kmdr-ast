@@ -45,6 +45,7 @@ export interface CommandNode extends NodeAST {
     | SubcommandNode
     | OptionNode
     | ArgumentNode
+    | OperandNode
   >;
   inSudoContext?: boolean;
 }
@@ -113,6 +114,7 @@ export interface WordNode extends NodeAST {
   word: string;
 }
 
+export interface OperandNode extends WordNode {}
 /**
  * Interface to construct an OptionNode
  */
