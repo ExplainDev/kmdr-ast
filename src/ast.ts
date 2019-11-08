@@ -21,7 +21,7 @@ import {
   ListLeafNodes,
   PipelineLeafNodes,
   FlatAST,
-  OperandNode
+  OperandNode,
 } from "./interfaces";
 import { PipelineNode } from ".";
 
@@ -33,11 +33,7 @@ class AST {
    * @param value the value we try to validate against
    * @returns true if there's a match, false if not
    */
-  public static assignmentHasValue(
-    node: AssignmentNode,
-    name: string,
-    value: string
-  ): boolean {
+  public static assignmentHasValue(node: AssignmentNode, name: string, value: string): boolean {
     return node.name === name && node.value === value;
   }
 
@@ -49,11 +45,7 @@ class AST {
    * @param value
    * @returns true if a first assignment matches the criteria
    */
-  public static commandHasAssignment(
-    node: CommandNode,
-    name: string,
-    value?: string
-  ): boolean {
+  public static commandHasAssignment(node: CommandNode, name: string, value?: string): boolean {
     if (!node.parts) {
       return false;
     }
@@ -79,19 +71,13 @@ class AST {
    * @returns true if at least 1 node is of kind stickyOptions and
    *  its word matches stickyOptions string
    */
-  public static commandHasStickyOptions(
-    node: CommandNode,
-    stickyOptions: string
-  ): boolean {
+  public static commandHasStickyOptions(node: CommandNode, stickyOptions: string): boolean {
     if (!node.parts) {
       return false;
     }
 
     for (const currentNode of node.parts) {
-      if (
-        AST.isStickyOption(currentNode) &&
-        currentNode.word === stickyOptions
-      ) {
+      if (AST.isStickyOption(currentNode) && currentNode.word === stickyOptions) {
         return true;
       }
     }
@@ -108,7 +94,7 @@ class AST {
   public static commandHasOption(
     node: CommandNode | StickyOptionNode,
     optionName: string,
-    argValue?: string
+    argValue?: string,
   ): boolean {
     if (!node.parts) {
       return false;
@@ -119,9 +105,7 @@ class AST {
       if (AST.isOption(currentNode)) {
         const optionNode = currentNode as OptionNode;
         if (
-          (argValue &&
-            optionNode.opt === optionName &&
-            AST.isArgument(node.parts[i + 1])) ||
+          (argValue && optionNode.opt === optionName && AST.isArgument(node.parts[i + 1])) ||
           (argValue === undefined && optionNode.opt === optionName)
         ) {
           return true;
@@ -146,10 +130,7 @@ class AST {
     return false;
   }
 
-  public static commandHasProgram(
-    node: CommandNode,
-    programName: string
-  ): boolean {
+  public static commandHasProgram(node: CommandNode, programName: string): boolean {
     for (const currentNode of node.parts) {
       if (AST.isProgram(currentNode as ProgramNode)) {
         const programNode = currentNode as ProgramNode;
@@ -163,7 +144,7 @@ class AST {
   public static commandHasSubcommand(
     node: CommandNode,
     subcommandName: string,
-    pos: number = 0
+    pos: number = 0,
   ): boolean {
     if (!node.parts) {
       return false;
@@ -235,9 +216,7 @@ class AST {
     return redirects;
   }
 
-  public static getAllSubcommands(
-    node: CommandNode
-  ): SubcommandNode[] | undefined {
+  public static getAllSubcommands(node: CommandNode): SubcommandNode[] | undefined {
     if (!node.parts) return;
 
     const subcommands: SubcommandNode[] = [];
@@ -255,9 +234,7 @@ class AST {
    * Returns all OptionNodeAST in a command
    * @param node
    */
-  public static getCommandOptions(
-    node: CommandNode | StickyOptionNode
-  ): OptionNode[] | undefined {
+  public static getCommandOptions(node: CommandNode | StickyOptionNode): OptionNode[] | undefined {
     if (!node.parts) {
       return;
     }
@@ -292,7 +269,7 @@ class AST {
    */
   public static getCommandOption(
     node: CommandNode | StickyOptionNode,
-    optionName: string
+    optionName: string,
   ): OptionNode | undefined {
     if (!node.parts) return;
 
@@ -357,14 +334,8 @@ class AST {
    * @returns the last node in a list of nodes
    */
   static getLastNode(
-    node: CommandNode | ListNode
-  ):
-    | CommandNode
-    | ListNode
-    | WordNode
-    | OperatorNode
-    | OperandNode
-    | undefined {
+    node: CommandNode | ListNode,
+  ): CommandNode | ListNode | WordNode | OperatorNode | OperandNode | undefined {
     if (!node.parts) return;
 
     const lastPos = node.parts.length - 1;
@@ -382,9 +353,7 @@ class AST {
     return -1;
   }
 
-  public static getSudoOptions(
-    node: CommandNode | StickyOptionNode
-  ): OptionNode[] | undefined {
+  public static getSudoOptions(node: CommandNode | StickyOptionNode): OptionNode[] | undefined {
     if (!node.parts) return;
     const options: OptionNode[] = [];
 
@@ -407,7 +376,7 @@ class AST {
 
   public static getSudoOption(
     node: CommandNode | StickyOptionNode,
-    optionName: string
+    optionName: string,
   ): OptionNode | undefined {
     if (!node.parts) return;
 
@@ -621,7 +590,7 @@ class AST {
   }
 
   public static flatten(
-    node: NodeAST
+    node: NodeAST,
   ): Array<
     | ProgramNode
     | OptionNode
@@ -660,7 +629,9 @@ class AST {
         AST.isOption(part) ||
         AST.isArgument(part) ||
         AST.isRedirect(part) ||
-        AST.isSudo(part)
+        AST.isSudo(part) ||
+        AST.isOperand(part) ||
+        AST.isOptionWithArg(part)
       ) {
         flat = [...flat, part];
       } else if (part.parts && AST.isStickyOption(part)) {
