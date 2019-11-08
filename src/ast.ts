@@ -122,7 +122,7 @@ class AST {
           (argValue &&
             optionNode.opt === optionName &&
             AST.isArgument(node.parts[i + 1])) ||
-          (!argValue && optionNode.opt === optionName)
+          (argValue === undefined && optionNode.opt === optionName)
         ) {
           return true;
         }
@@ -335,6 +335,7 @@ class AST {
     }
   }
   */
+
   /**
    * Get the Program of a command
    * @param node
