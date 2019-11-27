@@ -1,6 +1,8 @@
+import AST from "./ast";
+import Highlight from "./highlight";
 import {
-  AssignmentNode,
   ArgumentNode,
+  AssignmentNode,
   CommandLeafNodes,
   CommandNode,
   CompoundNode,
@@ -12,8 +14,8 @@ import {
   OperatorNode,
   OptionNode,
   OptionWithArgNode,
-  PipeNode,
   PipelineNode,
+  PipeNode,
   ProgramNode,
   RedirectNode,
   ReservedWordNode,
@@ -22,7 +24,6 @@ import {
   SudoNode,
   WordNode
 } from "./interfaces";
-import AST from "./ast";
 
 export {
   AssignmentNode,
@@ -31,6 +32,7 @@ export {
   CommandNode,
   CompoundNode,
   FlatAST,
+  Highlight,
   ListLeafNodes,
   ListNode,
   NodeAST,
