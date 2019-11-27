@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Decorator in React mode wraps a SubcommandNode in a span element 1`] = `
+<span
+  kind="subcommand"
+  summary="commit changes to repository"
+>
+  commit
+</span>
+`;
+
+exports[`Decorator in React mode wraps an ArgumentNode in a span element 1`] = `
+<span
+  kind="argument"
+>
+  value
+</span>
+`;
+
+exports[`Decorator in React mode wraps an OptionNode in a span element 1`] = `
+<span
+  kind="option"
+  summary="Sets the username"
+>
+  --user
+</span>
+`;
+
+exports[`Decorator in React mode wraps an OptionWithArg node in a span element 1`] = `
+<span
+  kind="optionWithArg"
+>
+  <span
+    kind="option"
+    summary="Sets the username"
+  >
+    --user
+  </span>
+  =
+  <span
+    kind="argument"
+  >
+    root
+  </span>
+</span>
+`;

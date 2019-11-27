@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Highlight in React mode decorates query 'rm -r dir/' with colors 1`] = `
+Array [
+  <span
+    kind="program"
+    summary="remove files or directories"
+  >
+    rm
+  </span>,
+  " ",
+  <span
+    kind="option"
+    summary="Remove directories and their contents recursively"
+  >
+    -r
+  </span>,
+  " ",
+  <span
+    kind="operand"
+  >
+    dir/
+  </span>,
+]
+`;
