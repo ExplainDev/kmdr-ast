@@ -82,7 +82,7 @@ export interface PipeNode extends NodeAST {
 export interface RedirectNode extends NodeAST {
   input: number | null;
   output: number | WordNode;
-  output_fd: number;
+  output_fd?: number;
   type: string;
 }
 
@@ -122,7 +122,7 @@ export interface OptionNode extends WordNode {
   followedByArg?: boolean;
   opt: string;
   optionSchema: OptionSchema;
-  optPos: number[];
+  optPos?: number[];
   startsWithDash?: number;
 }
 
@@ -199,4 +199,47 @@ export interface ASTInstance {
   ): boolean;
   te(): void;
   isAssignment(): boolean;
+}
+
+export type DecorationFunction = (...args: any[]) => any;
+
+export interface Decorators {
+  [kind: string]: DecorationFunction;
+}
+
+export interface IHighlight {
+  query(query: string, ast: NodeAST): any[];
+  token(
+    token:
+      | OptionNode
+      | ProgramNode
+      | OptionWithArgNode
+      | ArgumentNode
+      | OperatorNode
+      | AssignmentNode
+      | PipeNode
+      | SudoNode
+      | ReservedWordNode
+      | RedirectNode
+      | WordNode
+      | OperandNode
+  ): any;
+}
+
+export interface Decorator {
+  decorate(
+    token:
+      | OptionNode
+      | ProgramNode
+      | OptionWithArgNode
+      | ArgumentNode
+      | OperatorNode
+      | AssignmentNode
+      | PipeNode
+      | SudoNode
+      | ReservedWordNode
+      | RedirectNode
+      | WordNode
+      | OperandNode
+  ): any;
 }

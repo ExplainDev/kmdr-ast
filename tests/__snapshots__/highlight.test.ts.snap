@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Decorates nodes with React Components Decorate a single token inside of React Elements wraps a SubcommandNode in a span element 1`] = `
+<span
+  kind="subcommand"
+  summary="commit changes to repository"
+>
+  commit
+</span>
+`;
+
+exports[`Decorates nodes with React Components Decorate a single token inside of React Elements wraps an ArgumentNode in a span element 1`] = `
+<span
+  kind="argument"
+>
+  value
+</span>
+`;
+
+exports[`Decorates nodes with React Components Decorate a single token inside of React Elements wraps an OptionNode in a span element 1`] = `
+<span
+  kind="option"
+  summary="Sets the username"
+>
+  --user
+</span>
+`;
+
+exports[`Decorates nodes with React Components Decorate a single token inside of React Elements wraps an OptionWithArg node in a span element 1`] = `
+<span
+  kind="optionWithArg"
+>
+  <span
+    kind="option"
+    summary="Sets the username"
+  >
+    --user
+  </span>
+  =
+  <span
+    kind="argument"
+  >
+    root
+  </span>
+</span>
+`;
+
+exports[`Decorates nodes with React Components Decorates a full AST decorates query 'rm -r dir/' with React Elements 1`] = `
+<span>
+  <span
+    kind="program"
+    summary="remove files or directories"
+  >
+    rm
+  </span>
+   
+  <span
+    kind="option"
+    summary="Remove directories and their contents recursively"
+  >
+    -r
+  </span>
+   
+  <span
+    kind="operand"
+  >
+    dir/
+  </span>
+</span>
+`;

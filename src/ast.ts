@@ -623,13 +623,13 @@ class AST {
   public static flatten(
     node: NodeAST
   ): Array<
-    | ProgramNode
-    | OptionNode
-    | OperatorNode
     | ArgumentNode
     | AssignmentNode
+    | OperatorNode
+    | OptionNode
     | OptionWithArgNode
     | PipeNode
+    | ProgramNode
     | RedirectNode
     | ReservedWordNode
     | SubcommandNode
@@ -662,7 +662,8 @@ class AST {
         AST.isRedirect(part) ||
         AST.isSudo(part) ||
         AST.isOperand(part) ||
-        AST.isOptionWithArg(part)
+        AST.isOptionWithArg(part) ||
+        AST.isWord(part)
       ) {
         flat = [...flat, part];
       } else if (part.parts && AST.isStickyOption(part)) {
