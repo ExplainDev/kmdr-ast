@@ -76,13 +76,16 @@ class Highlight implements IHighlight {
       | ReservedWordNode
       | RedirectNode
       | WordNode
-      | OperandNode
+      | OperandNode,
+    fromPropName?: string
   ): any {
-    let decoratedString: string = "";
+    try {
+      const decoratedString = this.decorators[token.kind](token, fromPropName);
 
-    decoratedString = this.decorators[token.kind](token);
-
-    return decoratedString;
+      return decoratedString;
+    } catch (err) {
+      throw err;
+    }
   }
 
   private inRange(pos: number, range: number[]): boolean {
