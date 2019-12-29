@@ -21,9 +21,9 @@ import {
   ListLeafNodes,
   PipelineLeafNodes,
   FlatAST,
+  PipelineNode,
   OperandNode
 } from "./interfaces";
-import { PipelineNode } from ".";
 
 class AST {
   /**
@@ -187,6 +187,18 @@ class AST {
     return false;
   }
 
+  public static commandHasSudo(node: CommandNode): boolean {
+    if (!node.parts) return false;
+
+    for (const currentNode of node.parts) {
+      if (AST.isSudo(currentNode)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   public static getAllArguments(node: CommandNode): ArgumentNode[] | undefined {
     if (!node.parts) {
       return [];
@@ -217,6 +229,23 @@ class AST {
     }
 
     return assignments;
+  }
+
+  public static getAllPrograms(node: ListNode | PipelineNode): ProgramNode[] {
+    if (!node.parts) {
+      return [];
+    }
+
+    const programNodes: ProgramNode[] = [];
+
+    for (const currentNode of node.parts) {
+      if (AST.isCommand(currentNode)) {
+        const programNode = AST.getCommandProgram(currentNode as CommandNode);
+        programNode && programNodes.push(programNode);
+      }
+    }
+
+    return programNodes;
   }
 
   public static getAllRedirects(node: CommandNode): RedirectNode[] {
