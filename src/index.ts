@@ -1,53 +1,22 @@
-import AST from "./ast";
-import Highlight from "./highlight";
+import ASTNode from "./astNode";
+import ASTNodePoint from "./astNodePoint";
+import Tree from "./tree";
+import TreeCursor from "./treeCursor";
+
 import {
-  ArgumentNode,
-  AssignmentNode,
-  CommandLeafNodes,
-  CommandNode,
-  CompoundNode,
-  FlatAST,
-  ListLeafNodes,
-  ListNode,
-  NodeAST,
-  OperandNode,
-  OperatorNode,
-  OptionNode,
-  OptionWithArgNode,
-  PipelineNode,
-  PipeNode,
-  ProgramNode,
-  RedirectNode,
-  ReservedWordNode,
-  StickyOptionNode,
-  SubcommandNode,
-  SudoNode,
-  WordNode
-} from "./interfaces";
+  OptionArgNodeDefinition,
+  OptionNodeDefinition,
+  ProgramNodeDefinition,
+  SubcommandNodeDefinition
+} from "./nodeDefinition";
 
 export {
-  AssignmentNode,
-  ArgumentNode,
-  CommandLeafNodes,
-  CommandNode,
-  CompoundNode,
-  FlatAST,
-  Highlight,
-  ListLeafNodes,
-  ListNode,
-  NodeAST,
-  OperandNode,
-  OperatorNode,
-  OptionNode,
-  OptionWithArgNode,
-  PipeNode,
-  PipelineNode,
-  ProgramNode,
-  RedirectNode,
-  ReservedWordNode,
-  StickyOptionNode,
-  SubcommandNode,
-  SudoNode,
-  WordNode
+  ASTNode,
+  OptionArgNodeDefinition,
+  OptionNodeDefinition,
+  ProgramNodeDefinition,
+  SubcommandNodeDefinition,
+  Tree,
+  TreeCursor,
+  ASTNodePoint
 };
-export default AST;
