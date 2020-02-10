@@ -1,5 +1,6 @@
 import ASTNode from "./astNode";
 import ASTNodePoint from "./astNodePoint";
+import Highlight from "./highlight";
 import Tree from "./tree";
 import TreeCursor from "./treeCursor";
 
@@ -18,5 +19,6 @@ export {
   SubcommandNodeDefinition,
   Tree,
   TreeCursor,
-  ASTNodePoint
+  ASTNodePoint,
+  Highlight
 };
