@@ -36,7 +36,7 @@ export default class Highlight extends Decorate {
     source: string,
     tree: Tree,
     definitions: NodeDefinition[]
-  ): string {
+  ): string | string[] {
     const nodes = tree.flatten();
 
     let currentToken = 0;
@@ -78,7 +78,7 @@ export default class Highlight extends Decorate {
           columnAtLine === nodes[currentToken].endPosition.column - 1
         ) {
           decoratedStrings.push(
-            this.decorateNode(wordInRange, nodes[currentToken], definitions)
+            ...this.decorateNode(wordInRange, nodes[currentToken], definitions)
           );
           wordInRange = "";
           currentToken += 1;
@@ -87,7 +87,7 @@ export default class Highlight extends Decorate {
       } else {
         if (inRange) {
           decoratedStrings.push(
-            this.decorateNode(wordInRange, nodes[currentToken], definitions)
+            ...this.decorateNode(wordInRange, nodes[currentToken], definitions)
           );
           wordInRange = "";
           currentToken += 1;
@@ -98,8 +98,11 @@ export default class Highlight extends Decorate {
       }
       columnAtLine++;
     }
-
-    return decoratedStrings.join("");
+    if (this.mode === "console") {
+      return decoratedStrings.join("");
+    } else {
+      return decoratedStrings;
+    }
   }
 
   private decorateNode(
@@ -150,7 +153,11 @@ export default class Highlight extends Decorate {
             columnInNode === matches[currentToken].endPosition.column - 1
           ) {
             decoratedStrings.push(
-              this.decorateText(wordInRange, matches[currentToken].type)
+              this.decorateText(
+                wordInRange,
+                matches[currentToken].type,
+                matches[currentToken]
+              )
             );
             wordInRange = "";
             currentToken += 1;
@@ -159,7 +166,11 @@ export default class Highlight extends Decorate {
         } else {
           if (inRange) {
             decoratedStrings.push(
-              this.decorateText(wordInRange, matches[currentToken].type)
+              this.decorateText(
+                wordInRange,
+                matches[currentToken].type,
+                matches[currentToken]
+              )
             );
             wordInRange = "";
             currentToken += 1;
@@ -171,18 +182,25 @@ export default class Highlight extends Decorate {
         }
       }
     }
-
-    return decoratedStrings.join("");
+    if (this.mode === "console") {
+      return decoratedStrings.join("");
+    } else {
+      return decoratedStrings;
+    }
   }
 
-  private decorateText(text: string, type: string): string {
+  private decorateText(
+    text: string,
+    type: string,
+    definition?: NodeDefinition
+  ): any {
     switch (type) {
       case "`":
         return super.backtick(text);
       case "|":
-        return super.pipeline(text);
+        return super.pipeline(text, definition);
       case "&&":
-        return super.operator(text);
+        return super.operator(text, definition);
       case "(":
       case "$(":
         return super.openingParens(text);
@@ -191,43 +209,43 @@ export default class Highlight extends Decorate {
       case "}":
         return super.closingBraces(text);
       case ")":
-        return super.closinParens(text);
+        return super.closingParens(text, definition);
       case ">":
       case ">&":
-        return super.redirect(text);
+        return super.redirect(text, definition);
       case ";":
-        return super.semicolon(text);
+        return super.semicolon(text, definition);
       case "=":
-        return super.equal(text);
+        return super.equal(text, definition);
       case "command_name":
       case "program":
-        return super.program(text);
+        return super.program(text, definition);
       case "comment":
-        return super.comment(text);
+        return super.comment(text, definition);
       case "do":
-        return super.do(text);
+        return super.do(text, definition);
       case "done":
-        return super.done(text);
+        return super.done(text, definition);
       case "file_descriptor":
-        return super.fileDescriptor(text);
+        return super.fileDescriptor(text, definition);
       case "for":
-        return super.for(text);
+        return super.for(text, definition);
       case "function":
-        return super.fn(text);
+        return super.fn(text, definition);
       case "in":
-        return super.in(text);
+        return super.in(text, definition);
       case "option":
-        return super.option(text);
+        return super.option(text, definition);
       case "optionArg":
-        return super.optionArg(text);
+        return super.optionArg(text, definition);
       case "subcommand":
-        return super.subcommand(text);
+        return super.subcommand(text, definition);
       case "variable_name":
-        return super.variableName(text);
+        return super.variableName(text, definition);
       case "while":
-        return super.while(text);
+        return super.while(text, definition);
       default:
-        return super.word(text);
+        return super.word(text, definition);
     }
   }
 }

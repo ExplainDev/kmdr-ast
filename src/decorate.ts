@@ -23,7 +23,7 @@ export default class Decorate {
     }
   }
 
-  public closinParens(text: string, definition?: NodeDefinition) {
+  public closingParens(text: string, definition?: NodeDefinition) {
     try {
       return this.decorators.closingParens(text, definition);
     } catch (err) {
