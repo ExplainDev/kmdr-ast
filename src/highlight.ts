@@ -189,11 +189,11 @@ export default class Highlight extends Decorate {
     }
   }
 
-  private decorateText(
+  private decorateText<T>(
     text: string,
     type: string,
     definition?: NodeDefinition
-  ): any {
+  ): T | string {
     switch (type) {
       case "`":
         return super.backtick(text);
