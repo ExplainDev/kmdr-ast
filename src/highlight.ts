@@ -1,10 +1,9 @@
 import { ASTNode } from ".";
 import ASTNodePoint from "./astNodePoint";
-import Decorate from "./decorate";
-import { NodeDefinition } from "./interfaces";
+import { Decorators, NodeDefinition } from "./interfaces";
 import Tree from "./tree";
 
-export default class Highlight extends Decorate {
+export default class Highlight<R> {
   private static findNodeDefinition(
     node: ASTNode,
     definitions: NodeDefinition[]
@@ -26,9 +25,10 @@ export default class Highlight extends Decorate {
   }
 
   private mode: string;
+  private decorators: Decorators<R>;
 
-  constructor(decorators: any, mode: string) {
-    super(decorators);
+  constructor(decorators: Decorators<R>, mode: string) {
+    this.decorators = decorators;
     this.mode = mode;
   }
 
@@ -36,7 +36,7 @@ export default class Highlight extends Decorate {
     source: string,
     tree: Tree,
     definitions: NodeDefinition[]
-  ): string | string[] {
+  ): R[] {
     const nodes = tree.flatten();
 
     let currentToken = 0;
@@ -44,14 +44,14 @@ export default class Highlight extends Decorate {
     let wordInRange = "";
     let row = 0;
 
-    const decoratedStrings: string[] = [];
+    const decoratedStrings: R[] = [];
     let columnAtLine = 0;
 
     for (let column = 0; column < source.length; column++) {
       const char = source[column];
 
       if (char === `\n`) {
-        decoratedStrings.push(`\n`);
+        decoratedStrings.push(this.decorators.newLine());
         wordInRange = "";
 
         if (nodes[currentToken].type === "\n") {
@@ -94,22 +94,19 @@ export default class Highlight extends Decorate {
           inRange = false;
         }
         // if the current char is not part of any token, then append it to the array
-        decoratedStrings.push(char);
+        decoratedStrings.push(this.decorators.word(char));
       }
       columnAtLine++;
     }
-    if (this.mode === "console") {
-      return decoratedStrings.join("");
-    } else {
-      return decoratedStrings;
-    }
+
+    return decoratedStrings;
   }
 
   private decorateNode(
     text: string,
     node: ASTNode,
     definitions: NodeDefinition[]
-  ) {
+  ): R[] {
     const decoratedStrings = [];
     const { startPosition } = node;
     let currentToken = 0;
@@ -182,70 +179,65 @@ export default class Highlight extends Decorate {
         }
       }
     }
-    if (this.mode === "console") {
-      return decoratedStrings.join("");
-    } else {
-      return decoratedStrings;
-    }
+
+    return decoratedStrings;
   }
 
-  private decorateText<T>(
+  private decorateText(
     text: string,
     type: string,
     definition?: NodeDefinition
-  ): T | string {
+  ): R {
     switch (type) {
       case "`":
-        return super.backtick(text);
+        return this.decorators.backtick(text);
       case "|":
-        return super.pipeline(text, definition);
+        return this.decorators.pipeline(text, definition);
       case "&&":
-        return super.operator(text, definition);
+        return this.decorators.operator(text, definition);
       case "(":
       case "$(":
-        return super.openingParens(text);
-      case "{":
-        return super.openingBraces(text);
-      case "}":
-        return super.closingBraces(text);
       case ")":
-        return super.closingParens(text, definition);
+        return this.decorators.parens(text);
+      case "{":
+      case "}":
+        return this.decorators.braces(text);
       case ">":
       case ">&":
-        return super.redirect(text, definition);
+        return this.decorators.redirect(text, definition);
       case ";":
-        return super.semicolon(text, definition);
+        return this.decorators.semicolon(text, definition);
       case "=":
-        return super.equal(text, definition);
+        return this.decorators.equal(text, definition);
       case "command_name":
       case "program":
-        return super.program(text, definition);
+        return this.decorators.program(text, definition);
       case "comment":
-        return super.comment(text, definition);
+        return this.decorators.comment(text, definition);
       case "do":
-        return super.do(text, definition);
+        return this.decorators.do(text, definition);
       case "done":
-        return super.done(text, definition);
+        return this.decorators.done(text, definition);
       case "file_descriptor":
-        return super.fileDescriptor(text, definition);
+        return this.decorators.fileDescriptor(text, definition);
       case "for":
-        return super.for(text, definition);
+        return this.decorators.for(text, definition);
       case "function":
-        return super.fn(text, definition);
+        return this.decorators.fn(text, definition);
       case "in":
-        return super.in(text, definition);
+        return this.decorators.in(text, definition);
       case "option":
-        return super.option(text, definition);
+        return this.decorators.option(text, definition);
       case "optionArg":
-        return super.optionArg(text, definition);
+        return this.decorators.optionArg(text, definition);
       case "subcommand":
-        return super.subcommand(text, definition);
+        return this.decorators.subcommand(text, definition);
       case "variable_name":
-        return super.variableName(text, definition);
+        return this.decorators.variableName(text, definition);
       case "while":
-        return super.while(text, definition);
+        return this.decorators.while(text, definition);
       default:
-        return super.word(text, definition);
+        return this.decorators.word(text, definition);
     }
   }
 }

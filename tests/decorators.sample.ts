@@ -1,76 +1,99 @@
-import { NodeDefinition } from "../src/interfaces";
+import { Decorators, NodeDefinition } from "../src/interfaces";
 
-export const consoleDecorators = {
-  backtick: (text: string) => {
+export default class ConsoleDecorators implements Decorators<string> {
+  public backtick(text: string) {
     return `\u001b[97m${text}\u001b[0m`;
-  },
-  closingBraces: (text: string) => {
+  }
+
+  public braces(text: string) {
     return `\u001b[92m${text}\u001b[0m`;
-  },
-  closingParens: (text: string) => {
-    return `\u001b[35m${text}\u001b[0m`;
-  },
-  comment: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public comment(text: string, definition?: NodeDefinition) {
     return `\u001b[90m${text}\u001b[0m`;
-  },
-  do: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public do(text: string, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  done: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public done(text: string, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  equal: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public equal(text: string, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  fileDescriptor: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public fileDescriptor(text: string, definition?: NodeDefinition) {
     return `\u001b[96m${text}\u001b[0m`;
-  },
-  fn: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public fn(text: string, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  for: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public for(text: string, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  in: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public in(text: string, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  openingBraces: (text: string) => {
-    return `\u001b[92m${text}\u001b[0m`;
-  },
-  openingParens: (text: string) => {
-    return `\u001b[35m${text}\u001b[0m`;
-  },
-  operator: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public newLine() {
+    return "\n";
+  }
+
+  public operator(text: string, definition?: NodeDefinition) {
     return `\u001b[34m${text}\u001b[0m`;
-  },
-  option: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public option(text: string, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  optionArg: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public optionArg(text: string, definition?: NodeDefinition) {
     return `\u001b[31m${text}\u001b[0m`;
-  },
-  pipeline: (text: string, definition?: NodeDefinition) => {
-    return `\u001b[91m${text}\u001b[0m`;
-  },
-  program: (text: string, definition?: NodeDefinition) => {
-    return `\u001b[32;1m${text}\u001b[0m`;
-  },
-  redirect: (text: string, definition?: NodeDefinition) => {
-    return `\u001b[34m${text}\u001b[0m`;
-  },
-  semicolon: (text: string, definition?: NodeDefinition) => {
-    return `\u001b[94m${text}\u001b[0m`;
-  },
-  subcommand: (text: string, definition?: NodeDefinition) => {
-    return `\u001b[36;1m${text}\u001b[0m`;
-  },
-  variableName: (text: string, definition?: NodeDefinition) => {
-    return `\u001b[36;1m${text}\u001b[0m`;
-  },
-  while: (text: string) => {
+  }
+
+  public parens(text: string) {
     return `\u001b[35m${text}\u001b[0m`;
-  },
-  word: (text: string, definition?: NodeDefinition) => {
+  }
+
+  public pipeline(text: string, definition?: NodeDefinition) {
+    return `\u001b[91m${text}\u001b[0m`;
+  }
+
+  public program(text: string, definition?: NodeDefinition) {
+    return `\u001b[32;1m${text}\u001b[0m`;
+  }
+
+  public redirect(text: string, definition?: NodeDefinition) {
+    return `\u001b[34m${text}\u001b[0m`;
+  }
+
+  public semicolon(text: string, definition?: NodeDefinition) {
+    return `\u001b[94m${text}\u001b[0m`;
+  }
+
+  public space() {
+    return " ";
+  }
+
+  public subcommand(text: string, definition?: NodeDefinition) {
+    return `\u001b[36;1m${text}\u001b[0m`;
+  }
+
+  public variableName(text: string, definition?: NodeDefinition) {
+    return `\u001b[36;1m${text}\u001b[0m`;
+  }
+
+  public while(text: string) {
+    return `\u001b[35m${text}\u001b[0m`;
+  }
+
+  public word(text: string, definition?: NodeDefinition) {
     return text;
   }
-};
+}

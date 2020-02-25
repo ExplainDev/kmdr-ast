@@ -1,13 +1,16 @@
 import ASTNodePoint from "../src/astNodePoint";
 import Highlight from "../src/highlight";
 import Tree from "../src/tree";
-import { consoleDecorators } from "./decorators.sample";
+import ConsoleDecorators from "./decorators.sample";
+import { Decorators } from "../src/interfaces";
 
 describe("A program source code is decorated", () => {
-  let highlight: Highlight;
+  let highlight: Highlight<string>;
+  let consoleDecorators: Decorators<string>;
 
   describe("In console mode", () => {
     beforeAll(() => {
+      consoleDecorators = new ConsoleDecorators();
       highlight = new Highlight(consoleDecorators, "console");
     });
 
@@ -75,8 +78,8 @@ describe("A program source code is decorated", () => {
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr);
-      expect(decoratedStr).toMatch(
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toMatch(
         `\u001b[32;1mkmdr\u001b[0m \u001b[36;1mexplain\u001b[0m`
       );
     });
@@ -149,8 +152,8 @@ describe("A program source code is decorated", () => {
         }
       ];
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr);
-      expect(decoratedStr).toMatch(
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toMatch(
         `\u001b[32;1mls\u001b[0m \u001b[35m--all\u001b[0m`
       );
     });
@@ -268,9 +271,9 @@ describe("A program source code is decorated", () => {
       )} ${consoleDecorators.program("rm")} -${consoleDecorators.option(
         "r"
       )}${consoleDecorators.option("f")}`;
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
 
-      expect(decoratedStr).toMatch(expectedStr);
+      expect(decoratedStr.join("")).toMatch(expectedStr);
     });
 
     test("mysql --user=root", () => {
@@ -358,8 +361,8 @@ describe("A program source code is decorated", () => {
       )} ${consoleDecorators.option("--user")}=${consoleDecorators.optionArg(
         "root"
       )}`;
-      console.log(decoratedStr);
-      expect(decoratedStr).toEqual(expectedStr);
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("rm -rZXVf", () => {
@@ -445,7 +448,7 @@ describe("A program source code is decorated", () => {
         "rm"
       )} -${consoleDecorators.option("r")}ZXV${consoleDecorators.option("f")}`;
 
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("ls && rm &&cd", () => {
@@ -604,9 +607,8 @@ describe("A program source code is decorated", () => {
       )} ${consoleDecorators.operator("&&")} ${consoleDecorators.program(
         "rm"
       )} ${consoleDecorators.operator("&&")}${consoleDecorators.program("cd")}`;
-      console.log(decoratedStr);
-      console.log(expectedString);
-      expect(decoratedStr).toMatch(expectedString);
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toMatch(expectedString);
     });
 
     test("ls -alh > /dev/null", () => {
@@ -737,7 +739,7 @@ describe("A program source code is decorated", () => {
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
     });
 
     test("ls\nrm\ncd", () => {
@@ -877,8 +879,8 @@ cd`;
       const expectedStr = `${consoleDecorators.program("ls")}
 ${consoleDecorators.program("rm")}
 ${consoleDecorators.program("cd")}`;
-      console.log(decoratedStr);
-      expect(decoratedStr).toEqual(expectedStr);
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("function changeDirectory() { \ncd directory\n}", () => {
@@ -1023,17 +1025,13 @@ cd directory
       const decoratedStr = highlight.source(source, tree, definitions);
       const expectedStr = `${consoleDecorators.fn(
         "function"
-      )} ${consoleDecorators.word(
-        "changeDirectory"
-      )}${consoleDecorators.openingParens(
+      )} ${consoleDecorators.word("changeDirectory")}${consoleDecorators.parens(
         "("
-      )}${consoleDecorators.closingParens(
-        ")"
-      )} ${consoleDecorators.openingBraces("{")}
+      )}${consoleDecorators.parens(")")} ${consoleDecorators.braces("{")}
 ${consoleDecorators.program("cd")} ${consoleDecorators.word("directory")}
-${consoleDecorators.closingBraces("}")}`;
-      console.log(decoratedStr);
-      expect(decoratedStr).toEqual(expectedStr);
+${consoleDecorators.braces("}")}`;
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("# a comment\ngit commit", () => {
@@ -1114,7 +1112,7 @@ git commit`;
       const decoratedStr = highlight.source(source, tree, definitions);
       const expectedStr = `${consoleDecorators.comment("# a comment")}
 ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test(`(ls  -ah ; rm ) | sort -n -u`, () => {
@@ -1359,21 +1357,21 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // (ls  -ah ; rm ) | sort -n -u
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
 
-      const expectedStr = `${consoleDecorators.openingParens(
+      const expectedStr = `${consoleDecorators.parens(
         "("
       )}${consoleDecorators.program("ls")}  -${consoleDecorators.option(
         "a"
       )}${consoleDecorators.option("h")} ${consoleDecorators.semicolon(
         ";"
-      )} ${consoleDecorators.program("rm")} ${consoleDecorators.closingParens(
+      )} ${consoleDecorators.program("rm")} ${consoleDecorators.parens(
         ")"
       )} ${consoleDecorators.pipeline("|")} ${consoleDecorators.program(
         "sort"
       )} ${consoleDecorators.option("-n")} ${consoleDecorators.option("-u")}`;
 
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("for i in `seq 1 10`; do echo $i; done", () => {
@@ -1634,7 +1632,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
       // for i in `seq 1 10`; do echo $i; done
       const expectedStr = `${consoleDecorators.for(
         "for"
@@ -1650,7 +1648,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
         ";"
       )} ${consoleDecorators.done("done")}`;
 
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("rm file 2> error.log", () => {
@@ -1766,7 +1764,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // rm file 2> error.log
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
       const expectedStr = `${consoleDecorators.program(
         "rm"
       )} ${consoleDecorators.word("file")} ${consoleDecorators.fileDescriptor(
@@ -1774,7 +1772,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       )}${consoleDecorators.redirect(">")} ${consoleDecorators.word(
         "error.log"
       )}`;
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("NODE_ENV=production npm run start", () => {
@@ -1898,7 +1896,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
       // NODE_ENV=production npm run start
       const expectedStr = `${consoleDecorators.variableName(
         "NODE_ENV"
@@ -1907,7 +1905,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       )} ${consoleDecorators.program("npm")} ${consoleDecorators.subcommand(
         "run"
       )} ${consoleDecorators.word("start")}`;
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("rm $(ls)", () => {
@@ -2028,14 +2026,14 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
       const expectedStr = `${consoleDecorators.program(
         "rm"
-      )} ${consoleDecorators.openingParens("$(")}${consoleDecorators.program(
+      )} ${consoleDecorators.parens("$(")}${consoleDecorators.program(
         "ls"
-      )}${consoleDecorators.closingParens(")")}`;
+      )}${consoleDecorators.parens(")")}`;
 
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test("while true; do rm; done", () => {
@@ -2197,7 +2195,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // while true; do rm; done
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
       const expectedStr = `${consoleDecorators.while(
         "while"
       )} ${consoleDecorators.program("true")}${consoleDecorators.semicolon(
@@ -2205,7 +2203,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       )} ${consoleDecorators.do("do")} ${consoleDecorators.program(
         "rm"
       )}${consoleDecorators.semicolon(";")} ${consoleDecorators.done("done")}`;
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test(`cd "dir with spaces/"`, () => {
@@ -2291,11 +2289,11 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // cd "dir with spaces/"
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
       const expectedStr = `${consoleDecorators.program(
         "cd"
       )} ${consoleDecorators.word(`"dir with spaces/"`)}`;
-      expect(decoratedStr).toEqual(expectedStr);
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
     test(`echo "Text $(date)"`, () => {
@@ -2450,15 +2448,13 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // echo "Text $(date)"
-      console.log(decoratedStr);
+      console.log(decoratedStr.join(""));
       const expectedStr = `${consoleDecorators.program(
         "echo"
-      )} "Text ${consoleDecorators.openingParens(
-        "$("
-      )}${consoleDecorators.program("date")}${consoleDecorators.closingParens(
-        ")"
-      )}"`;
-      expect(decoratedStr).toEqual(expectedStr);
+      )} "Text ${consoleDecorators.parens("$(")}${consoleDecorators.program(
+        "date"
+      )}${consoleDecorators.parens(")")}"`;
+      expect(decoratedStr.join("")).toEqual(expectedStr);
     });
   });
 });

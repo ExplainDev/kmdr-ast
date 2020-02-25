@@ -28,3 +28,30 @@ export interface NodeDefinition {
   type: string;
   metadata: ProgramSchema | SubcommandSchema | OptionSchema | ArgumentSchema;
 }
+
+export interface Decorators<T> {
+  backtick(text: string, definition?: NodeDefinition): T;
+  braces(text: string, definition?: NodeDefinition): T;
+  comment(text: string, definition?: NodeDefinition): T;
+  do(text: string, definition?: NodeDefinition): T;
+  done(text: string, definition?: NodeDefinition): T;
+  equal(text: string, definition?: NodeDefinition): T;
+  fileDescriptor(text: string, definition?: NodeDefinition): T;
+  fn(text: string, definition?: NodeDefinition): T;
+  for(text: string, definition?: NodeDefinition): T;
+  in(text: string, definition?: NodeDefinition): T;
+  newLine(): T;
+  option(text: string, definition?: NodeDefinition): T;
+  optionArg(text: string, definition?: NodeDefinition): T;
+  operator(text: string, definition?: NodeDefinition): T;
+  parens(test: string, definition?: NodeDefinition): T;
+  pipeline(text: string, definition?: NodeDefinition): T;
+  program(text: string, definition?: NodeDefinition): T;
+  redirect(text: string, definition?: NodeDefinition): T;
+  semicolon(text: string, definition?: NodeDefinition): T;
+  space(): T;
+  subcommand(text: string, definition?: NodeDefinition): T;
+  variableName(text: string, definition?: NodeDefinition): T;
+  while(text: string, definition?: NodeDefinition): T;
+  word(text: string, definition?: NodeDefinition): T;
+}
