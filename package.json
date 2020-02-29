@@ -7,11 +7,11 @@
   "author": "Eddie Ramirez <djedi.r@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "kmdr-parser": "^2.2.0"
+    "kmdr-parser": "^2.2.1"
   },
   "devDependencies": {
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.26",
+    "@types/node": "^12.12.29",
     "create-html-element": "^3.0.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
@@ -19,7 +19,7 @@
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "build": "tsc",
