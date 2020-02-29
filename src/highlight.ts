@@ -3,7 +3,7 @@ import ASTNodePoint from "./astNodePoint";
 import { Decorators, NodeDefinition } from "./interfaces";
 import Tree from "./tree";
 
-export default class Highlight<R> {
+export default class Highlight<R extends string | Text | Element> {
   private static findNodeDefinition(
     node: ASTNode,
     definitions: NodeDefinition[]
@@ -35,10 +35,9 @@ export default class Highlight<R> {
   public source(
     source: string,
     tree: Tree,
-    definitions: NodeDefinition[]
+    definitions?: NodeDefinition[]
   ): R[] {
     const nodes = tree.flatten();
-
     let currentToken = 0;
     let inRange = false;
     let wordInRange = "";
@@ -49,14 +48,14 @@ export default class Highlight<R> {
 
     for (let column = 0; column < source.length; column++) {
       const char = source[column];
-
       if (char === `\n`) {
         decoratedStrings.push(this.decorators.newLine());
         wordInRange = "";
 
-        if (nodes[currentToken].type === "\n") {
+        if (currentToken < nodes.length && nodes[currentToken].type === "\n") {
           currentToken += 1;
         }
+
         inRange = false;
         row++;
         columnAtLine = 0;
@@ -105,7 +104,7 @@ export default class Highlight<R> {
   private decorateNode(
     text: string,
     node: ASTNode,
-    definitions: NodeDefinition[]
+    definitions?: NodeDefinition[]
   ): R[] {
     const decoratedStrings = [];
     const { startPosition } = node;
@@ -113,7 +112,11 @@ export default class Highlight<R> {
     let inRange = false;
     let wordInRange = "";
 
-    const matches = Highlight.findNodeDefinition(node, definitions);
+    let matches: NodeDefinition[] = [];
+
+    if (definitions) {
+      matches = Highlight.findNodeDefinition(node, definitions);
+    }
 
     if (matches.length === 0) {
       decoratedStrings.push(this.decorateText(text, node.type));
@@ -191,24 +194,40 @@ export default class Highlight<R> {
     switch (type) {
       case "`":
         return this.decorators.backtick(text);
+      case `"`:
+        return this.decorators.doubleQuotes(text);
       case "|":
         return this.decorators.pipeline(text, definition);
       case "&&":
-        return this.decorators.operator(text, definition);
+      case "||":
+      case "!":
+        return this.decorators.logicalOperator(text, definition);
       case "(":
       case "$(":
       case ")":
         return this.decorators.parens(text);
       case "{":
+      case "${":
       case "}":
         return this.decorators.braces(text);
+      case "[":
+      case "]":
+        return this.decorators.brackets(text);
       case ">":
       case ">&":
+      case ">>":
+      case "&>":
         return this.decorators.redirect(text, definition);
       case ";":
         return this.decorators.semicolon(text, definition);
       case "=":
         return this.decorators.equal(text, definition);
+      case "==":
+      case "!=":
+      case "<":
+      case "<=":
+      case ">=":
+        return this.decorators.relationalOperator(text, definition);
       case "command_name":
       case "program":
         return this.decorators.program(text, definition);
@@ -224,14 +243,26 @@ export default class Highlight<R> {
         return this.decorators.for(text, definition);
       case "function":
         return this.decorators.fn(text, definition);
+      case "if":
+        return this.decorators.if(text, definition);
+      case "else":
+        return this.decorators.else(text, definition);
+      case "fi":
+        return this.decorators.fi(text, definition);
       case "in":
         return this.decorators.in(text, definition);
       case "option":
         return this.decorators.option(text, definition);
       case "optionArg":
         return this.decorators.optionArg(text, definition);
+      case "pipeline":
+        return this.decorators.bitwiseOperator(text, definition);
       case "subcommand":
         return this.decorators.subcommand(text, definition);
+      case "test_operator":
+        return this.decorators.testOperator(text, definition);
+      case "then":
+        return this.decorators.then(text, definition);
       case "variable_name":
         return this.decorators.variableName(text, definition);
       case "while":

@@ -2,7 +2,7 @@ import ASTNodePoint from "../src/astNodePoint";
 import Highlight from "../src/highlight";
 import Tree from "../src/tree";
 import ConsoleDecorators from "./decorators.sample";
-import { Decorators } from "../src/interfaces";
+import { Decorators, NodeDefinition } from "../src/interfaces";
 
 describe("A program source code is decorated", () => {
   let highlight: Highlight<string>;
@@ -604,9 +604,11 @@ describe("A program source code is decorated", () => {
 
       const expectedString = `${consoleDecorators.program(
         "ls"
-      )} ${consoleDecorators.operator("&&")} ${consoleDecorators.program(
+      )} ${consoleDecorators.logicalOperator("&&")} ${consoleDecorators.program(
         "rm"
-      )} ${consoleDecorators.operator("&&")}${consoleDecorators.program("cd")}`;
+      )} ${consoleDecorators.logicalOperator("&&")}${consoleDecorators.program(
+        "cd"
+      )}`;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toMatch(expectedString);
     });
@@ -2292,7 +2294,9 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       console.log(decoratedStr.join(""));
       const expectedStr = `${consoleDecorators.program(
         "cd"
-      )} ${consoleDecorators.word(`"dir with spaces/"`)}`;
+      )} ${consoleDecorators.doubleQuotes(`"`)}${consoleDecorators.word(
+        `dir with spaces/`
+      )}${consoleDecorators.doubleQuotes(`"`)}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -2451,10 +2455,49 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       console.log(decoratedStr.join(""));
       const expectedStr = `${consoleDecorators.program(
         "echo"
-      )} "Text ${consoleDecorators.parens("$(")}${consoleDecorators.program(
-        "date"
-      )}${consoleDecorators.parens(")")}"`;
+      )} ${consoleDecorators.doubleQuotes(`"`)}Text ${consoleDecorators.parens(
+        "$("
+      )}${consoleDecorators.program("date")}${consoleDecorators.parens(
+        ")"
+      )}${consoleDecorators.doubleQuotes(`"`)}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
+    });
+
+    // Tests a new line at the end
+    test(`# Simple hello world example:
+
+`, () => {
+      const source = `# Simple hello world example:
+`;
+      const tree = new Tree({
+        children: [
+          {
+            children: [],
+            endPosition: { row: 0, column: 29 },
+            hasError: false,
+            isMissing: false,
+            isNamed: true,
+            startPosition: { row: 0, column: 0 },
+            type: "comment",
+            text: "# Simple hello world example:"
+          }
+        ],
+        endPosition: { row: 1, column: 0 },
+        hasError: false,
+        isMissing: false,
+        isNamed: true,
+        startPosition: { row: 0, column: 0 },
+        type: "program"
+      });
+      const definitions: NodeDefinition[] = [];
+
+      const decoratedStr = highlight.source(source, tree, definitions);
+      const expectedStr = `${consoleDecorators.comment(
+        "# Simple hello world example:"
+      )}
+`;
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toBe(expectedStr);
     });
   });
 });
