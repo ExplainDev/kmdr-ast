@@ -6,7 +6,7 @@ export default class ASTNode implements Node {
   public readonly hasError?: boolean;
   public readonly isMissing?: boolean;
   public readonly isNamed?: boolean;
-  public readonly parent?: Node;
+  public readonly parent?: ASTNode;
   public readonly startPosition: NodePoint;
   public readonly type: string;
   public readonly text?: string;

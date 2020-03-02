@@ -24,4 +24,20 @@ export default class TreeCursor {
 
     return false;
   }
+
+  public gotoClosestCommandAncestor(): boolean {
+    let current = this.currentNode;
+    while (true) {
+      if (current.parent && current.parent.type !== "command") {
+        current = current.parent;
+      } else if (current.parent?.type === "command") {
+        this.currentNode = current.parent;
+        return true;
+      } else if (current.parent === undefined) {
+        break;
+      }
+    }
+
+    return false;
+  }
 }
