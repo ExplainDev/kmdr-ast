@@ -9,6 +9,7 @@
   "dependencies": {
     "kmdr-parser": "^2.2.1"
   },
+  "type": "module",
   "devDependencies": {
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.29",
