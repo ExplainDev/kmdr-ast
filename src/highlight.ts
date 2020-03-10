@@ -228,6 +228,8 @@ export default class Highlight<R extends string | Text | Element> {
       case "<=":
       case ">=":
         return this.decorators.relationalOperator(text, definition);
+      case "command":
+        return this.decorators.command(text);
       case "command_name":
       case "program":
         return this.decorators.program(text, definition);

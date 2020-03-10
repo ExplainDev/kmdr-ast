@@ -27,6 +27,7 @@ export default class TreeCursor {
 
   public gotoClosestCommandAncestor(): boolean {
     let current = this.currentNode;
+
     while (true) {
       if (current.parent && current.parent.type !== "command") {
         current = current.parent;

@@ -21,6 +21,10 @@ export default class ConsoleDecorators implements Decorators<string> {
     return `\u001b[92m${text}\u001b[0m`;
   }
 
+  public command(text: string) {
+    return text;
+  }
+
   public comment(text: string, definition?: NodeDefinition) {
     return `\u001b[90m${text}\u001b[0m`;
   }

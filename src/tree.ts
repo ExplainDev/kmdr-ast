@@ -39,4 +39,23 @@ export default class Tree {
 
     return flatTree;
   }
+
+  public *flattenGenerator() {
+    const cursor = this.walk();
+    const stack = new Array(cursor.currentNode);
+
+    while (stack.length) {
+      const current = stack.pop();
+
+      if (current) {
+        if (current.children) {
+          stack.push(...current.children.reverse());
+        }
+
+        if (current.children === undefined || current.children.length === 0) {
+          yield current;
+        }
+      }
+    }
+  }
 }
