@@ -11,6 +11,7 @@ export interface NodePoint {
 }
 
 export interface Node {
+  childrenCount?: number;
   children?: Node[];
   endPosition: NodePoint;
   hasError?: boolean;
@@ -35,6 +36,7 @@ export interface Decorators<T extends Element | Text | string> {
   bitwiseOperator(text: string, definition?: NodeDefinition): T;
   braces(text: string, definition?: NodeDefinition): T;
   brackets(text: string, definition?: NodeDefinition): T;
+  command(text: string): T;
   comment(text: string, definition?: NodeDefinition): T;
   do(text: string, definition?: NodeDefinition): T;
   doubleQuotes(text: string, definition?: NodeDefinition): T;
