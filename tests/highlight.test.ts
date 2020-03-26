@@ -2499,5 +2499,117 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toBe(expectedStr);
     });
+
+    xtest(`ls -rlt\t`, () => {
+      const source = `ls -rlt\t`;
+      const tree = new Tree({
+        childCount: 1,
+        children: [
+          {
+            childCount: 2,
+            children: [
+              {
+                childCount: 1,
+                children: [
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 0, column: 2 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 0, column: 0 },
+                    text: "ls",
+                    type: "word"
+                  }
+                ],
+                endPosition: { row: 0, column: 2 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 0, column: 0 },
+                text: "ls",
+                type: "command_name"
+              },
+              {
+                childCount: 0,
+                children: [],
+                endPosition: { row: 0, column: 7 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 0, column: 3 },
+                text: "-rtl",
+                type: "word"
+              }
+            ],
+            endPosition: { row: 0, column: 7 },
+            hasError: false,
+            isMissing: false,
+            isNamed: true,
+            startPosition: { row: 0, column: 0 },
+            text: "ls -rtl",
+            type: "command"
+          }
+        ],
+        endPosition: { row: 0, column: 8 },
+        hasError: false,
+        isMissing: false,
+        isNamed: true,
+        startPosition: { row: 0, column: 0 },
+        text: "ls -rtl\t",
+        type: "program"
+      });
+
+      const definitions = [
+        {
+          type: "program",
+          startPosition: { row: 0, column: 0 },
+          endPosition: { row: 0, column: 2 },
+          metadata: { name: "ls", summary: "List directory contents" }
+        },
+        {
+          type: "option",
+          startPosition: { column: 4, row: 0 },
+          endPosition: { column: 5, row: 0 },
+          metadata: {
+            summary: "Reverse order while sorting",
+            expectsArg: false,
+            long: ["--reverse"],
+            short: ["-r"]
+          }
+        },
+        {
+          type: "option",
+          startPosition: { column: 5, row: 0 },
+          endPosition: { column: 6, row: 0 },
+          metadata: {
+            summary: "Sorts by modification time, newest first",
+            expectsArg: false,
+            long: [],
+            short: ["-t"]
+          }
+        },
+        {
+          type: "option",
+          startPosition: { column: 6, row: 0 },
+          endPosition: { column: 7, row: 0 },
+          metadata: {
+            summary: "Uses a long listing format",
+            expectsArg: false,
+            long: [],
+            short: ["-l"]
+          }
+        }
+      ];
+
+      const decoratedStr = highlight.source(source, tree, definitions);
+      const expectedStr = `${consoleDecorators.comment(
+        "# Simple hello world example:"
+      )}
+`;
+      console.log(decoratedStr.join(""));
+      expect(decoratedStr.join("")).toBe(expectedStr);
+    });
   });
 });

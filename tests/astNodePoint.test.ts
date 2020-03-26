@@ -89,5 +89,26 @@ describe("ASTNodePoint", () => {
 
       expect(ASTNodePoint.rangeContainsRange(range, subrange)).toBeFalsy();
     });
+
+    test("a range is serialized", () => {
+      const startPosition = new ASTNodePoint({ column: 0, row: 0 });
+      const endPosition = new ASTNodePoint({ column: 10, row: 0 });
+
+      expect(ASTNodePoint.serializeRange(startPosition, endPosition)).toEqual(
+        "0,0-0,10"
+      );
+    });
+
+    test("a range is deserialized", () => {
+      const serialized = "2,10-2,100";
+
+      const startPosition = new ASTNodePoint({ column: 10, row: 2 });
+      const endPosition = new ASTNodePoint({ column: 100, row: 2 });
+
+      expect(ASTNodePoint.deserializeRange(serialized)).toEqual([
+        startPosition,
+        endPosition
+      ]);
+    });
   });
 });

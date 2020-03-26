@@ -1,7 +1,7 @@
 import { Node, NodePoint } from "./interfaces";
 
 export default class ASTNode implements Node {
-  public readonly childrenCount?: number;
+  public readonly childCount?: number;
   public readonly children?: Node[];
   public readonly endPosition: NodePoint;
   public readonly hasError?: boolean;
@@ -14,7 +14,7 @@ export default class ASTNode implements Node {
 
   constructor(node: Node, parent?: Node) {
     const {
-      childrenCount,
+      childCount,
       children,
       endPosition,
       hasError,
@@ -25,7 +25,7 @@ export default class ASTNode implements Node {
       text
     } = node;
 
-    this.childrenCount = childrenCount;
+    this.childCount = childCount;
     this.endPosition = endPosition;
     this.hasError = hasError;
     this.isMissing = isMissing;

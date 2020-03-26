@@ -1,79 +1,91 @@
-import { Decorators, NodeDefinition } from "../src/interfaces";
+import { Decorators, Node, NodeDefinition } from "../src/interfaces";
 
 export default class ConsoleDecorators implements Decorators<string> {
-  public arithmeticOperator(text: string, definition?: NodeDefinition) {
+  public arithmeticOperator(
+    text: string,
+    node: Node,
+    definition?: NodeDefinition
+  ) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
-  public backtick(text: string) {
+  public backtick(text: string, node: Node) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
-  public bitwiseOperator(text: string, definition?: NodeDefinition) {
+  public bitwiseOperator(
+    text: string,
+    node: Node,
+    definition?: NodeDefinition
+  ) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
-  public braces(text: string) {
+  public braces(text: string, node: Node) {
     return `\u001b[92m${text}\u001b[0m`;
   }
 
-  public brackets(text: string) {
+  public brackets(text: string, node: Node) {
     return `\u001b[92m${text}\u001b[0m`;
   }
 
-  public command(text: string) {
+  public command(text: string, node: Node) {
     return text;
   }
 
-  public comment(text: string, definition?: NodeDefinition) {
+  public comment(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[90m${text}\u001b[0m`;
   }
 
-  public do(text: string, definition?: NodeDefinition) {
+  public do(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public doubleQuotes(text: string, definition?: NodeDefinition) {
+  public doubleQuotes(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public done(text: string, definition?: NodeDefinition) {
+  public done(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public else(text: string, definition?: NodeDefinition) {
+  public else(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public equal(text: string, definition?: NodeDefinition) {
+  public equal(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public fi(text: string, definition?: NodeDefinition) {
+  public fi(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public fileDescriptor(text: string, definition?: NodeDefinition) {
+  public fileDescriptor(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[96m${text}\u001b[0m`;
   }
 
-  public fn(text: string, definition?: NodeDefinition) {
+  public fn(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public for(text: string, definition?: NodeDefinition) {
+  public for(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public if(text: string, definition?: NodeDefinition) {
+  public if(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public in(text: string, definition?: NodeDefinition) {
+  public in(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public logicalOperator(text: string, definition?: NodeDefinition) {
+  public logicalOperator(
+    text: string,
+    node: Node,
+    definition?: NodeDefinition
+  ) {
     return `\u001b[34m${text}\u001b[0m`;
   }
 
@@ -81,35 +93,39 @@ export default class ConsoleDecorators implements Decorators<string> {
     return "\n";
   }
 
-  public option(text: string, definition?: NodeDefinition) {
+  public option(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public optionArg(text: string, definition?: NodeDefinition) {
+  public optionArg(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[31m${text}\u001b[0m`;
   }
 
-  public parens(text: string) {
+  public parens(text: string, node: Node) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public pipeline(text: string, definition?: NodeDefinition) {
+  public pipeline(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[91m${text}\u001b[0m`;
   }
 
-  public program(text: string, definition?: NodeDefinition) {
+  public program(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[32;1m${text}\u001b[0m`;
   }
 
-  public redirect(text: string, definition?: NodeDefinition) {
+  public redirect(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[34m${text}\u001b[0m`;
   }
 
-  public relationalOperator(text: string, definition?: NodeDefinition) {
+  public relationalOperator(
+    text: string,
+    node: Node,
+    definition?: NodeDefinition
+  ) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
-  public semicolon(text: string, definition?: NodeDefinition) {
+  public semicolon(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[94m${text}\u001b[0m`;
   }
 
@@ -117,27 +133,27 @@ export default class ConsoleDecorators implements Decorators<string> {
     return " ";
   }
 
-  public subcommand(text: string, definition?: NodeDefinition) {
+  public subcommand(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[36;1m${text}\u001b[0m`;
   }
 
-  public testOperator(text: string, definition?: NodeDefinition) {
+  public testOperator(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
-  public then(text: string, definition?: NodeDefinition) {
+  public then(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public variableName(text: string, definition?: NodeDefinition) {
+  public variableName(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[36;1m${text}\u001b[0m`;
   }
 
-  public while(text: string) {
+  public while(text: string, node: Node) {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public word(text: string, definition?: NodeDefinition) {
+  public word(text: string, node: Node, definition?: NodeDefinition) {
     return text;
   }
 }

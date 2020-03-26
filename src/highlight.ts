@@ -119,7 +119,7 @@ export default class Highlight<R extends string | Text | Element> {
     }
 
     if (matches.length === 0) {
-      decoratedStrings.push(this.decorateText(text, node.type));
+      decoratedStrings.push(this.decorateText(text, node.type, node));
     } else {
       for (let column = 0; column < text.length; column++) {
         // get the current character
@@ -156,6 +156,7 @@ export default class Highlight<R extends string | Text | Element> {
               this.decorateText(
                 wordInRange,
                 matches[currentToken].type,
+                node,
                 matches[currentToken]
               )
             );
@@ -169,6 +170,7 @@ export default class Highlight<R extends string | Text | Element> {
               this.decorateText(
                 wordInRange,
                 matches[currentToken].type,
+                node,
                 matches[currentToken]
               )
             );
@@ -178,7 +180,7 @@ export default class Highlight<R extends string | Text | Element> {
           }
           // if the current char is not part of any token, then append it to the string
           // decoratedStrings.push(char);
-          decoratedStrings.push(this.decorateText(char, node.type));
+          decoratedStrings.push(this.decorateText(char, node.type, node));
         }
       }
     }
@@ -189,11 +191,12 @@ export default class Highlight<R extends string | Text | Element> {
   private decorateText(
     text: string,
     type: string,
+    node: ASTNode,
     definition?: NodeDefinition
   ): R {
     switch (type) {
       case "`":
-        return this.decorators.backtick(text);
+        return this.decorators.backtick(text, node);
       case `"`:
         return this.decorators.doubleQuotes(text);
       case "|":
