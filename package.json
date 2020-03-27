@@ -1,6 +1,6 @@
 {
   "name": "kmdr-ast",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Traverse the AST of an explanation by kmdr",
   "main": "dist/index.js",
   "repository": "git@github.com:ediardo/kmdr-ast.git",
