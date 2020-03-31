@@ -41,6 +41,7 @@ export interface Decorators<T extends Element | Text | string> {
   do(text: string, node?: Node, definition?: NodeDefinition): T;
   doubleQuotes(text: string, node?: Node, definition?: NodeDefinition): T;
   done(text: string, node?: Node, definition?: NodeDefinition): T;
+  elif(text: string, node?: Node, definition?: NodeDefinition): T;
   else(text: string, node?: Node, definition?: NodeDefinition): T;
   equal(text: string, node?: Node, definition?: NodeDefinition): T;
   fi(text: string, node?: Node, definition?: NodeDefinition): T;

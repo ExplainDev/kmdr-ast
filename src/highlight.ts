@@ -252,6 +252,8 @@ export default class Highlight<R extends string | Text | Element> {
         return this.decorators.if(text, definition);
       case "else":
         return this.decorators.else(text, definition);
+      case "elif":
+        return this.decorators.elif(text, definition);
       case "fi":
         return this.decorators.fi(text, definition);
       case "in":

@@ -49,6 +49,10 @@ export default class ConsoleDecorators implements Decorators<string> {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
+  public elif(text: string, node: Node, definition?: NodeDefinition) {
+    return `\u001b[35m${text}\u001b[0m`;
+  }
+
   public else(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[35m${text}\u001b[0m`;
   }
