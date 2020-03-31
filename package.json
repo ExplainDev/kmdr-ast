@@ -7,11 +7,11 @@
   "author": "Eddie Ramirez <djedi.r@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "kmdr-parser": "^2.2.1"
+    "kmdr-parser": "^2.2.3"
   },
   "devDependencies": {
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.29",
+    "@types/node": "^12.12.34",
     "create-html-element": "^3.0.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
