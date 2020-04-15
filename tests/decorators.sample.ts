@@ -1,6 +1,10 @@
 import { Decorators, Node, NodeDefinition } from "../src/interfaces";
 
 export default class ConsoleDecorators implements Decorators<string> {
+  public argument(text: string, node: Node, definition?: NodeDefinition) {
+    return `${text}`;
+  }
+
   public arithmeticOperator(
     text: string,
     node: Node,

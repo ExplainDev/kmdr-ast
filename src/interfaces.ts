@@ -31,6 +31,7 @@ export interface NodeDefinition {
 }
 
 export interface Decorators<T extends Element | Text | string> {
+  argument(text: string, node?: Node, definition?: NodeDefinition): T;
   arithmeticOperator(text: string, node?: Node, definition?: NodeDefinition): T;
   backtick(text: string, node?: Node, definition?: NodeDefinition): T;
   bitwiseOperator(text: string, node?: Node, definition?: NodeDefinition): T;
