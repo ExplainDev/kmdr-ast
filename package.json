@@ -23,8 +23,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "jest --verbose",
-    "publish": "yarn run build && np --no-tests"
+    "test": "jest --verbose"
   },
   "jest": {
     "testPathIgnorePatterns": [
