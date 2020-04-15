@@ -1,11 +1,12 @@
 import ASTNode from "./astNode";
 import ASTNodePoint from "./astNodePoint";
 import Highlight from "./highlight";
-import { NodeDefinition, Decorators } from "./interfaces";
+import { Decorators, NodeDefinition } from "./interfaces";
 import Tree from "./tree";
 import TreeCursor from "./treeCursor";
 
 import {
+  ArgumentNodeDefinition,
   OptionArgNodeDefinition,
   OptionNodeDefinition,
   ProgramNodeDefinition,
@@ -14,6 +15,7 @@ import {
 
 export {
   ASTNode,
+  ArgumentNodeDefinition,
   OptionArgNodeDefinition,
   OptionNodeDefinition,
   ProgramNodeDefinition,
