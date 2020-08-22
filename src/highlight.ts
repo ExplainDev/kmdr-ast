@@ -3,16 +3,10 @@ import ASTNodePoint from "./astNodePoint";
 import { Decorators, NodeDefinition } from "./interfaces";
 import Tree from "./tree";
 
-export default class Highlight<R extends string | Text | Element> {
-  private static findNodeDefinition(
-    node: ASTNode,
-    definitions: NodeDefinition[]
-  ) {
-    const matches = definitions.filter(definition => {
-      const definitionRange = [
-        definition.startPosition,
-        definition.endPosition
-      ];
+export default class Highlight<R extends string | Text | Element | any> {
+  private static findNodeDefinition(node: ASTNode, definitions: NodeDefinition[]) {
+    const matches = definitions.filter((definition) => {
+      const definitionRange = [definition.startPosition, definition.endPosition];
       const nodeRange = [node.startPosition, node.endPosition];
 
       return (
@@ -32,11 +26,7 @@ export default class Highlight<R extends string | Text | Element> {
     this.mode = mode;
   }
 
-  public source(
-    source: string,
-    tree: Tree,
-    definitions?: NodeDefinition[]
-  ): R[] {
+  public source(source: string, tree: Tree, definitions?: NodeDefinition[]): R[] {
     const nodes = tree.flatten();
     let currentToken = 0;
     let inRange = false;
@@ -65,29 +55,19 @@ export default class Highlight<R extends string | Text | Element> {
       const { startPosition, endPosition } = nodes[currentToken];
       const point = new ASTNodePoint({ row, column: columnAtLine });
 
-      if (
-        currentToken < nodes.length &&
-        ASTNodePoint.isInRange([startPosition, endPosition], point)
-      ) {
+      if (currentToken < nodes.length && ASTNodePoint.isInRange([startPosition, endPosition], point)) {
         inRange = true;
         wordInRange += char;
         // if there's a token that spans till the end of the string
-        if (
-          column === source.length - 1 ||
-          columnAtLine === nodes[currentToken].endPosition.column - 1
-        ) {
-          decoratedStrings.push(
-            ...this.decorateNode(wordInRange, nodes[currentToken], definitions)
-          );
+        if (column === source.length - 1 || columnAtLine === nodes[currentToken].endPosition.column - 1) {
+          decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
           wordInRange = "";
           currentToken += 1;
           inRange = false;
         }
       } else {
         if (inRange) {
-          decoratedStrings.push(
-            ...this.decorateNode(wordInRange, nodes[currentToken], definitions)
-          );
+          decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
           wordInRange = "";
           currentToken += 1;
           inRange = false;
@@ -101,11 +81,7 @@ export default class Highlight<R extends string | Text | Element> {
     return decoratedStrings;
   }
 
-  private decorateNode(
-    text: string,
-    node: ASTNode,
-    definitions?: NodeDefinition[]
-  ): R[] {
+  private decorateNode(text: string, node: ASTNode, definitions?: NodeDefinition[]): R[] {
     const decoratedStrings = [];
     const { startPosition } = node;
     let currentToken = 0;
@@ -132,48 +108,25 @@ export default class Highlight<R extends string | Text | Element> {
         // a node definition
         const point = new ASTNodePoint({
           column: columnInNode,
-          row: startPosition.row
+          row: startPosition.row,
         });
 
         if (
           currentToken < matches.length &&
-          ASTNodePoint.isInRange(
-            [
-              matches[currentToken].startPosition,
-              matches[currentToken].endPosition
-            ],
-            point
-          )
+          ASTNodePoint.isInRange([matches[currentToken].startPosition, matches[currentToken].endPosition], point)
         ) {
           inRange = true;
           wordInRange += char;
           // if there's a token that spans till the end of the string
-          if (
-            column === text.length - 1 ||
-            columnInNode === matches[currentToken].endPosition.column - 1
-          ) {
-            decoratedStrings.push(
-              this.decorateText(
-                wordInRange,
-                matches[currentToken].type,
-                node,
-                matches[currentToken]
-              )
-            );
+          if (column === text.length - 1 || columnInNode === matches[currentToken].endPosition.column - 1) {
+            decoratedStrings.push(this.decorateText(wordInRange, matches[currentToken].type, node, matches[currentToken]));
             wordInRange = "";
             currentToken += 1;
             inRange = false;
           }
         } else {
           if (inRange) {
-            decoratedStrings.push(
-              this.decorateText(
-                wordInRange,
-                matches[currentToken].type,
-                node,
-                matches[currentToken]
-              )
-            );
+            decoratedStrings.push(this.decorateText(wordInRange, matches[currentToken].type, node, matches[currentToken]));
             wordInRange = "";
             currentToken += 1;
             inRange = false;
@@ -188,12 +141,7 @@ export default class Highlight<R extends string | Text | Element> {
     return decoratedStrings;
   }
 
-  private decorateText(
-    text: string,
-    type: string,
-    node: ASTNode,
-    definition?: NodeDefinition
-  ): R {
+  private decorateText(text: string, type: string, node: ASTNode, definition?: NodeDefinition): R {
     switch (type) {
       case "`":
         return this.decorators.backtick(text, node);
@@ -213,6 +161,8 @@ export default class Highlight<R extends string | Text | Element> {
       case "${":
       case "}":
         return this.decorators.braces(text);
+      case "[[":
+      case "]]":
       case "[":
       case "]":
         return this.decorators.brackets(text);

@@ -2,7 +2,7 @@ import {
   ArgumentSchema,
   OptionSchema,
   ProgramSchema,
-  SubcommandSchema
+  SubcommandSchema,
 } from "kmdr-parser";
 
 export interface NodePoint {
@@ -30,7 +30,7 @@ export interface NodeDefinition {
   metadata: ProgramSchema | SubcommandSchema | OptionSchema | ArgumentSchema;
 }
 
-export interface Decorators<T extends Element | Text | string> {
+export interface Decorators<T extends Element | Text | string | any> {
   argument(text: string, node?: Node, definition?: NodeDefinition): T;
   arithmeticOperator(text: string, node?: Node, definition?: NodeDefinition): T;
   backtick(text: string, node?: Node, definition?: NodeDefinition): T;
