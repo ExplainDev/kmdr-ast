@@ -52,27 +52,31 @@ export default class Highlight<R extends string | Text | Element | any> {
         continue;
       }
 
-      const { startPosition, endPosition } = nodes[currentToken];
-      const point = new ASTNodePoint({ row, column: columnAtLine });
+      try {
+        const { startPosition, endPosition } = nodes[currentToken];
+        const point = new ASTNodePoint({ row, column: columnAtLine });
 
-      if (currentToken < nodes.length && ASTNodePoint.isInRange([startPosition, endPosition], point)) {
-        inRange = true;
-        wordInRange += char;
-        // if there's a token that spans till the end of the string
-        if (column === source.length - 1 || columnAtLine === nodes[currentToken].endPosition.column - 1) {
-          decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
-          wordInRange = "";
-          currentToken += 1;
-          inRange = false;
+        if (currentToken < nodes.length && ASTNodePoint.isInRange([startPosition, endPosition], point)) {
+          inRange = true;
+          wordInRange += char;
+          // if there's a token that spans till the end of the string
+          if (column === source.length - 1 || columnAtLine === nodes[currentToken].endPosition.column - 1) {
+            decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
+            wordInRange = "";
+            currentToken += 1;
+            inRange = false;
+          }
+        } else {
+          if (inRange) {
+            decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
+            wordInRange = "";
+            currentToken += 1;
+            inRange = false;
+          }
+          // if the current char is not part of any token, then append it to the array
+          decoratedStrings.push(this.decorators.word(char));
         }
-      } else {
-        if (inRange) {
-          decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
-          wordInRange = "";
-          currentToken += 1;
-          inRange = false;
-        }
-        // if the current char is not part of any token, then append it to the array
+      } catch (err) {
         decoratedStrings.push(this.decorators.word(char));
       }
       columnAtLine++;
