@@ -214,6 +214,8 @@ export default class Highlight<R extends string | Text | Element | any> {
         return this.decorators.fi(text, definition);
       case "in":
         return this.decorators.in(text, definition);
+      case "missing_program":
+        return this.decorators.missingProgram(text, definition);
       case "option":
         return this.decorators.option(text, definition);
       case "optionArg":

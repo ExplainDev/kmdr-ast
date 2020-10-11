@@ -5,11 +5,7 @@ export default class ConsoleDecorators implements Decorators<string> {
     return `${text}`;
   }
 
-  public arithmeticOperator(
-    text: string,
-    node: Node,
-    definition?: NodeDefinition
-  ) {
+  public arithmeticOperator(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
@@ -17,11 +13,7 @@ export default class ConsoleDecorators implements Decorators<string> {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
-  public bitwiseOperator(
-    text: string,
-    node: Node,
-    definition?: NodeDefinition
-  ) {
+  public bitwiseOperator(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 
@@ -89,14 +81,13 @@ export default class ConsoleDecorators implements Decorators<string> {
     return `\u001b[35m${text}\u001b[0m`;
   }
 
-  public logicalOperator(
-    text: string,
-    node: Node,
-    definition?: NodeDefinition
-  ) {
+  public logicalOperator(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[34m${text}\u001b[0m`;
   }
 
+  public missingProgram(text: string, node: Node, definition?: NodeDefinition) {
+    return `\u001b[32;1m${text}\u001b[0m`;
+  }
   public newLine() {
     return "\n";
   }
@@ -125,11 +116,7 @@ export default class ConsoleDecorators implements Decorators<string> {
     return `\u001b[34m${text}\u001b[0m`;
   }
 
-  public relationalOperator(
-    text: string,
-    node: Node,
-    definition?: NodeDefinition
-  ) {
+  public relationalOperator(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[97m${text}\u001b[0m`;
   }
 

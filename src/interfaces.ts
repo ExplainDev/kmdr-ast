@@ -1,9 +1,4 @@
-import {
-  ArgumentSchema,
-  OptionSchema,
-  ProgramSchema,
-  SubcommandSchema,
-} from "kmdr-parser";
+import { ArgumentSchema, OptionSchema, ProgramSchema, SubcommandSchema } from "kmdr-parser";
 
 export interface NodePoint {
   row: number;
@@ -51,6 +46,7 @@ export interface Decorators<T extends Element | Text | string | any> {
   for(text: string, node?: Node, definition?: NodeDefinition): T;
   if(text: string, node?: Node, definition?: NodeDefinition): T;
   in(text: string, node?: Node, definition?: NodeDefinition): T;
+  missingProgram(text: string, node?: Node, definition?: NodeDefinition): T;
   newLine(): T;
   option(text: string, node?: Node, definition?: NodeDefinition): T;
   optionArg(text: string, node?: Node, definition?: NodeDefinition): T;
