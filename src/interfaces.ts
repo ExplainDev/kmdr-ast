@@ -25,6 +25,14 @@ export interface NodeDefinition {
   metadata: ProgramSchema | SubcommandSchema | OptionSchema | ArgumentSchema;
 }
 
+export interface DefinitionFeedback {
+  schemaId: string;
+  schemaVersion: string;
+  path: string[];
+  definitionId?: string;
+  type: string;
+}
+
 export interface Decorators<T extends Element | Text | string | any> {
   argument(text: string, node?: Node, definition?: NodeDefinition): T;
   arithmeticOperator(text: string, node?: Node, definition?: NodeDefinition): T;

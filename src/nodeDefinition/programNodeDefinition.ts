@@ -1,6 +1,6 @@
-import { ProgramSchema } from "kmdr-parser";
+import { Program, ProgramSchema } from "kmdr-parser";
 import ASTNodePoint from "../astNodePoint";
-import { NodeDefinition } from "../interfaces";
+import { DefinitionFeedback, NodeDefinition } from "../interfaces";
 
 /**
  *
@@ -10,17 +10,22 @@ export default class ProgramNodeDefinition implements NodeDefinition {
   public readonly endPosition: ASTNodePoint;
   public readonly type: string = "program";
   public readonly metadata: ProgramSchema;
+  public readonly definitionFeedback?: DefinitionFeedback;
 
   constructor(
     startPosition: ASTNodePoint,
     endPosition: ASTNodePoint,
-    programSchema: ProgramSchema
+    program: Program,
+    definitionFeedback?: DefinitionFeedback
   ) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
+
     this.metadata = {
-      name: programSchema.name,
-      summary: programSchema.summary
+      name: program.name,
+      summary: program.summary,
     };
+
+    this.definitionFeedback = definitionFeedback;
   }
 }
