@@ -10,14 +10,9 @@ export default class OptionNodeDefinition implements NodeDefinition {
   public readonly endPosition: ASTNodePoint;
   public readonly type: string = "option";
   public readonly metadata: OptionSchema;
-  public readonly definitionFeedback?: DefinitionFeedback;
+  public readonly definition: DefinitionFeedback;
 
-  constructor(
-    startPosition: ASTNodePoint,
-    endPosition: ASTNodePoint,
-    option: Option,
-    definitionFeedback?: DefinitionFeedback
-  ) {
+  constructor(startPosition: ASTNodePoint, endPosition: ASTNodePoint, option: Option, definition: DefinitionFeedback) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
     this.metadata = {
@@ -27,6 +22,6 @@ export default class OptionNodeDefinition implements NodeDefinition {
       short: option.short,
       summary: option.summary,
     };
-    this.definitionFeedback = definitionFeedback;
+    this.definition = definition;
   }
 }

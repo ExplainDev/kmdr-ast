@@ -10,14 +10,9 @@ export default class ProgramNodeDefinition implements NodeDefinition {
   public readonly endPosition: ASTNodePoint;
   public readonly type: string = "program";
   public readonly metadata: ProgramSchema;
-  public readonly definitionFeedback?: DefinitionFeedback;
+  public readonly definition: DefinitionFeedback;
 
-  constructor(
-    startPosition: ASTNodePoint,
-    endPosition: ASTNodePoint,
-    program: Program,
-    definitionFeedback?: DefinitionFeedback
-  ) {
+  constructor(startPosition: ASTNodePoint, endPosition: ASTNodePoint, program: Program, definition: DefinitionFeedback) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
 
@@ -26,6 +21,6 @@ export default class ProgramNodeDefinition implements NodeDefinition {
       summary: program.summary,
     };
 
-    this.definitionFeedback = definitionFeedback;
+    this.definition = definition;
   }
 }

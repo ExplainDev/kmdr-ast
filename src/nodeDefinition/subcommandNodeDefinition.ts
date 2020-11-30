@@ -10,13 +10,13 @@ export default class SubcommandNodeDefinition implements NodeDefinition {
   public readonly endPosition: ASTNodePoint;
   public readonly type: string = "subcommand";
   public readonly metadata: SubcommandSchema;
-  public readonly definitionFeedback?: DefinitionFeedback;
+  public readonly definition: DefinitionFeedback;
 
   constructor(
     startPosition: ASTNodePoint,
     endPosition: ASTNodePoint,
     subcommand: Subcommand,
-    definitionFeedback?: DefinitionFeedback
+    definition: DefinitionFeedback
   ) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
@@ -24,6 +24,6 @@ export default class SubcommandNodeDefinition implements NodeDefinition {
       name: subcommand.name,
       summary: subcommand.summary,
     };
-    this.definitionFeedback = definitionFeedback;
+    this.definition = definition;
   }
 }
