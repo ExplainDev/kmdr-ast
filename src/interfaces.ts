@@ -23,6 +23,15 @@ export interface NodeDefinition {
   endPosition: NodePoint;
   type: string;
   metadata: ProgramSchema | SubcommandSchema | OptionSchema | ArgumentSchema;
+  definition?: Definition;
+}
+
+export interface Definition {
+  schemaId: string;
+  schemaVersion: string;
+  path: string[];
+  definitionId?: string;
+  type: string;
 }
 
 export interface DefinitionFeedback {
