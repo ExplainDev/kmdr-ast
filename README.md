@@ -4,14 +4,20 @@ A validator, traverser and syntax highlighter for AST
 
 ## Development
 
+### Install Dependencies
+
+```bash
+npm install
+```
+
 ### Tests
 
-```
-yarn run test
+```bash
+npm run test
 ```
 
 ### Build
 
-```
-yarn run build
+```bash
+npm run build
 ```
