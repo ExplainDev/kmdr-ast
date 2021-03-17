@@ -112,6 +112,10 @@ export default class ConsoleDecorators implements Decorators<string> {
     return `\u001b[32;1m${text}\u001b[0m`;
   }
 
+  public property(text: string) {
+    return text;
+  }
+
   public redirect(text: string, node: Node, definition?: NodeDefinition) {
     return `\u001b[34m${text}\u001b[0m`;
   }

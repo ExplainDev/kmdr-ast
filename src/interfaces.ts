@@ -1,9 +1,4 @@
-import {
-  ArgumentSchema,
-  OptionSchema,
-  ProgramSchema,
-  SubcommandSchema
-} from "kmdr-parser";
+import { ArgumentSchema, OptionSchema, ProgramSchema, SubcommandSchema } from "kmdr-parser";
 
 export interface NodePoint {
   row: number;
@@ -54,6 +49,14 @@ export interface Decorators<T extends Element | Text | string | any> {
   bitwiseOperator(text: string, node?: Node, definition?: NodeDefinition): T;
   braces(text: string, node?: Node, definition?: NodeDefinition): T;
   brackets(text: string, node?: Node, definition?: NodeDefinition): T;
+  /**
+   * lang: css
+   * A class Selector
+   * @param text
+   * @param node
+   * @param definition
+   */
+  className?(text: string, node?: Node, definition?: NodeDefinition): T;
   command(text: string, node?: Node): T;
   comment(text: string, node?: Node, definition?: NodeDefinition): T;
   do(text: string, node?: Node, definition?: NodeDefinition): T;
@@ -81,10 +84,33 @@ export interface Decorators<T extends Element | Text | string | any> {
   semicolon(text: string, node?: Node, definition?: NodeDefinition): T;
   space(): T;
   subcommand(text: string, node?: Node, definition?: NodeDefinition): T;
+  /**
+   * lang: css
+   * A tag name selector
+   * @param text
+   * @param node
+   * @param definition
+   */
+  tagName?(text: string, node?: Node, definition?: NodeDefinition): T;
   testOperator(text: string, node?: Node, definition?: NodeDefinition): T;
   then(text: string, node?: Node, definition?: NodeDefinition): T;
+  /**
+   * lang: css
+   * A universal selector
+   * @param text
+   * @param node
+   * @param definition
+   */
+  universalSelector?(text: string, node?: Node, definition?: Node): T;
   variableName(text: string, node?: Node, definition?: NodeDefinition): T;
   while(text: string, node?: Node, definition?: NodeDefinition): T;
   word(text: string, node?: Node, definition?: NodeDefinition): T;
-  property(text: string, node?: Node, definition?: NodeDefinition): T;
+  /**
+   * lang: bash
+   * A property name
+   * @param text
+   * @param node
+   * @param definition
+   */
+  property?(text: string, node?: Node, definition?: NodeDefinition): T;
 }
