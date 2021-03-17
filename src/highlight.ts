@@ -39,16 +39,23 @@ export default class Highlight<R extends string | Text | Element | any> {
     for (let column = 0; column < source.length; column++) {
       const char = source[column];
       if (char === `\n`) {
-        decoratedStrings.push(this.decorators.newLine());
-        wordInRange = "";
+        if (inRange) {
+          // For CSS
+          decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
+          decoratedStrings.push(this.decorators.newLine());
+        } else {
+          decoratedStrings.push(this.decorators.newLine());
 
-        if (currentToken < nodes.length && nodes[currentToken].type === "\n") {
-          currentToken += 1;
+          if (currentToken < nodes.length && nodes[currentToken].type === "\n") {
+            currentToken += 1;
+          }
         }
 
-        inRange = false;
+        wordInRange = "";
+
         row++;
         columnAtLine = 0;
+        inRange = false;
         continue;
       }
 
@@ -59,20 +66,23 @@ export default class Highlight<R extends string | Text | Element | any> {
         if (currentToken < nodes.length && ASTNodePoint.isInRange([startPosition, endPosition], point)) {
           inRange = true;
           wordInRange += char;
+
           // if there's a token that spans till the end of the string
-          if (column === source.length - 1 || columnAtLine === nodes[currentToken].endPosition.column - 1) {
+          if (
+            column === source.length - 1 ||
+            (columnAtLine === nodes[currentToken].endPosition.column - 1 && row === nodes[currentToken].endPosition.row)
+          ) {
             decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
             wordInRange = "";
             currentToken += 1;
             inRange = false;
           }
+        } else if (inRange) {
+          decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
+          wordInRange = "";
+          currentToken += 1;
+          inRange = false;
         } else {
-          if (inRange) {
-            decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
-            wordInRange = "";
-            currentToken += 1;
-            inRange = false;
-          }
           // if the current char is not part of any token, then append it to the array
           decoratedStrings.push(this.decorators.word(char));
         }
@@ -123,14 +133,18 @@ export default class Highlight<R extends string | Text | Element | any> {
           wordInRange += char;
           // if there's a token that spans till the end of the string
           if (column === text.length - 1 || columnInNode === matches[currentToken].endPosition.column - 1) {
-            decoratedStrings.push(this.decorateText(wordInRange, matches[currentToken].type, node, matches[currentToken]));
+            decoratedStrings.push(
+              this.decorateText(wordInRange, matches[currentToken].type, node, matches[currentToken])
+            );
             wordInRange = "";
             currentToken += 1;
             inRange = false;
           }
         } else {
           if (inRange) {
-            decoratedStrings.push(this.decorateText(wordInRange, matches[currentToken].type, node, matches[currentToken]));
+            decoratedStrings.push(
+              this.decorateText(wordInRange, matches[currentToken].type, node, matches[currentToken])
+            );
             wordInRange = "";
             currentToken += 1;
             inRange = false;
@@ -162,7 +176,7 @@ export default class Highlight<R extends string | Text | Element | any> {
       case ")":
         return this.decorators.parens(text);
       case "{":
-      case "${":
+      case `\${`:
       case "}":
         return this.decorators.braces(text);
       case "[[":
@@ -226,12 +240,36 @@ export default class Highlight<R extends string | Text | Element | any> {
         return this.decorators.subcommand(text, definition);
       case "test_operator":
         return this.decorators.testOperator(text, definition);
+
       case "then":
         return this.decorators.then(text, definition);
       case "variable_name":
         return this.decorators.variableName(text, definition);
       case "while":
         return this.decorators.while(text, definition);
+      /////////////////////////////
+      // CSS
+      ////////////////////////////
+      case "property": {
+        if (this.decorators.property) return this.decorators.property(text, definition);
+
+        return this.decorators.word(text, definition);
+      }
+      case "class_name": {
+        if (this.decorators.className) return this.decorators.className(text, definition);
+
+        return this.decorators.word(text, definition);
+      }
+      case "*": {
+        if (this.decorators.universalSelector) return this.decorators.universalSelector(text, definition);
+
+        return this.decorators.word(text, definition);
+      }
+      case "tag_name": {
+        if (this.decorators.tagName) return this.decorators.tagName(text, definition);
+
+        return this.decorators.word(text, definition);
+      }
       default:
         return this.decorators.word(text, definition);
     }

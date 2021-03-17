@@ -5,10 +5,7 @@ import { ASTNode } from ".";
  *
  */
 export default class ASTNodePoint implements NodePoint {
-  public static areEqualRanges(
-    range1: ASTNodePoint[],
-    range2: ASTNodePoint[]
-  ): boolean {
+  public static areEqualRanges(range1: ASTNodePoint[], range2: ASTNodePoint[]): boolean {
     return (
       range1[0].row === range2[0].row &&
       range1[0].column === range2[0].column &&
@@ -20,17 +17,37 @@ export default class ASTNodePoint implements NodePoint {
   public static deserializeRange(serialized: string): NodePoint[] {
     const [start, end] = serialized.split("-");
 
-    const startPosition = start.split(",").map(n => parseInt(n, 10));
-    const endPosition = end.split(",").map(n => parseInt(n, 10));
+    const startPosition = start.split(",").map((n) => parseInt(n, 10));
+    const endPosition = end.split(",").map((n) => parseInt(n, 10));
 
     return [
       new ASTNodePoint({ row: startPosition[0], column: startPosition[1] }),
-      new ASTNodePoint({ row: endPosition[0], column: endPosition[1] })
+      new ASTNodePoint({ row: endPosition[0], column: endPosition[1] }),
     ];
   }
 
+  /**
+   * Checks if a point is inside a node range
+   *
+   * @param range the range (start, end positions) of a node
+   * @param point the point defined by row and column
+   */
   public static isInRange(range: ASTNodePoint[], point: ASTNodePoint): boolean {
     const [startPosition, endPosition] = range;
+
+    const rangeSpansMultipleLines = startPosition.row !== endPosition.row;
+
+    if (rangeSpansMultipleLines) {
+      // If the node spans 3 lines or more, just check if point it's in the middle...
+      if (point.row > startPosition.row && point.row < endPosition.row) {
+        return true;
+      } else if (
+        (point.row === startPosition.row && point.column >= startPosition.column) ||
+        (point.row === endPosition.row && point.column < endPosition.column)
+      ) {
+        return true;
+      }
+    }
 
     return (
       startPosition.row <= point.row &&
@@ -40,10 +57,12 @@ export default class ASTNodePoint implements NodePoint {
     );
   }
 
-  public static rangeContainsRange(
-    range: ASTNodePoint[],
-    subrange: ASTNodePoint[]
-  ): boolean {
+  /**
+   *
+   * @param range
+   * @param subrange
+   */
+  public static rangeContainsRange(range: ASTNodePoint[], subrange: ASTNodePoint[]): boolean {
     return (
       range[0].row <= subrange[0].row &&
       range[0].column <= subrange[0].column &&
@@ -52,10 +71,7 @@ export default class ASTNodePoint implements NodePoint {
     );
   }
 
-  public static serializeRange(
-    startPosition: ASTNodePoint,
-    endPosition: ASTNodePoint
-  ): string {
+  public static serializeRange(startPosition: ASTNodePoint, endPosition: ASTNodePoint): string {
     return `${startPosition.row},${startPosition.column}-${endPosition.row},${endPosition.column}`;
   }
 

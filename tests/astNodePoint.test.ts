@@ -6,7 +6,7 @@ describe("ASTNodePoint", () => {
   test("A node point is created", () => {
     const nodePoint: NodePoint = {
       column: 2,
-      row: 0
+      row: 0,
     };
 
     const astNodePoint = new ASTNodePoint(nodePoint);
@@ -17,75 +17,68 @@ describe("ASTNodePoint", () => {
     test("A point is within a range", () => {
       const nodePoint = new ASTNodePoint({ column: 10, row: 0 });
 
-      const range = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 11, row: 0 })
-      ];
+      const range = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 11, row: 0 })];
 
       expect(ASTNodePoint.isInRange(range, nodePoint)).toBeTruthy();
     });
 
+    test("A point is within a range of a node that spans 2 lines", () => {
+      const nodePoint = new ASTNodePoint({ column: 13, row: 1 });
+
+      const range = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 14, row: 1 })];
+
+      expect(ASTNodePoint.isInRange(range, nodePoint)).toBeTruthy();
+    });
+
+    test("A point is within a range of a node that spans 3 lines", () => {
+      const nodePoint = new ASTNodePoint({ column: 5, row: 1 });
+
+      const range = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 1, row: 2 })];
+
+      expect(ASTNodePoint.isInRange(range, nodePoint)).toBeTruthy();
+    });
     test("A point is not within a range", () => {
       const nodePoint = new ASTNodePoint({ column: 11, row: 0 });
 
-      const range = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 11, row: 0 })
-      ];
+      const range = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 11, row: 0 })];
+
+      expect(ASTNodePoint.isInRange(range, nodePoint)).toBeFalsy();
+    });
+
+    test("A point is not withing a range that spans 3 lines", () => {
+      const nodePoint = new ASTNodePoint({ column: 1, row: 0 });
+
+      const range = [new ASTNodePoint({ column: 2, row: 0 }), new ASTNodePoint({ column: 14, row: 1 })];
 
       expect(ASTNodePoint.isInRange(range, nodePoint)).toBeFalsy();
     });
 
     test("Two ranges are the same", () => {
-      const range1 = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 11, row: 0 })
-      ];
+      const range1 = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 11, row: 0 })];
 
-      const range2 = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 11, row: 0 })
-      ];
+      const range2 = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 11, row: 0 })];
 
       expect(ASTNodePoint.areEqualRanges(range1, range2)).toBeTruthy();
     });
 
     test("Two ranges are not the same", () => {
-      const range1 = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 10, row: 0 })
-      ];
+      const range1 = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 10, row: 0 })];
 
-      const range2 = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 11, row: 0 })
-      ];
+      const range2 = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 11, row: 0 })];
 
       expect(ASTNodePoint.areEqualRanges(range1, range2)).toBeFalsy();
     });
 
     test("a range contains another range", () => {
-      const range = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 10, row: 0 })
-      ];
-      const subrange = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 9, row: 0 })
-      ];
+      const range = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 10, row: 0 })];
+      const subrange = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 9, row: 0 })];
 
       expect(ASTNodePoint.rangeContainsRange(range, subrange)).toBeTruthy();
     });
 
     test("a range doesn't contain another range", () => {
-      const range = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 10, row: 0 })
-      ];
-      const subrange = [
-        new ASTNodePoint({ column: 0, row: 0 }),
-        new ASTNodePoint({ column: 11, row: 0 })
-      ];
+      const range = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 10, row: 0 })];
+      const subrange = [new ASTNodePoint({ column: 0, row: 0 }), new ASTNodePoint({ column: 11, row: 0 })];
 
       expect(ASTNodePoint.rangeContainsRange(range, subrange)).toBeFalsy();
     });
@@ -94,9 +87,7 @@ describe("ASTNodePoint", () => {
       const startPosition = new ASTNodePoint({ column: 0, row: 0 });
       const endPosition = new ASTNodePoint({ column: 10, row: 0 });
 
-      expect(ASTNodePoint.serializeRange(startPosition, endPosition)).toEqual(
-        "0,0-0,10"
-      );
+      expect(ASTNodePoint.serializeRange(startPosition, endPosition)).toEqual("0,0-0,10");
     });
 
     test("a range is deserialized", () => {
@@ -105,10 +96,7 @@ describe("ASTNodePoint", () => {
       const startPosition = new ASTNodePoint({ column: 10, row: 2 });
       const endPosition = new ASTNodePoint({ column: 100, row: 2 });
 
-      expect(ASTNodePoint.deserializeRange(serialized)).toEqual([
-        startPosition,
-        endPosition
-      ]);
+      expect(ASTNodePoint.deserializeRange(serialized)).toEqual([startPosition, endPosition]);
     });
   });
 });
