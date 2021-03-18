@@ -2,11 +2,11 @@ import ASTNodePoint from "../src/astNodePoint";
 import Highlight from "../src/highlight";
 import Tree from "../src/tree";
 import ConsoleDecorators from "./decorators.sample";
-import { Decorators, NodeDefinition } from "../src/interfaces";
+import { ThemeDecorators, NodeDefinition } from "../src/interfaces";
 
 describe("A program source code is decorated", () => {
   let highlight: Highlight<string>;
-  let consoleDecorators: Decorators<string>;
+  let consoleDecorators: ThemeDecorators<string>;
 
   describe("In console mode", () => {
     beforeAll(() => {
@@ -29,14 +29,14 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "kmdr"
-                  }
+                    text: "kmdr",
+                  },
                 ],
                 endPosition: { row: 0, column: 4 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [],
@@ -45,21 +45,21 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 5 },
                 type: "word",
-                text: "explain"
-              }
+                text: "explain",
+              },
             ],
             endPosition: { row: 0, column: 12 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 12 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
 
       const definitions = [
@@ -67,21 +67,19 @@ describe("A program source code is decorated", () => {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 4 },
-          metadata: { name: "kmdr", summary: "The ultimate CLI learning tool" }
+          metadata: { name: "kmdr", summary: "The ultimate CLI learning tool" },
         },
         {
           type: "subcommand",
           startPosition: { row: 0, column: 5 },
           endPosition: { row: 0, column: 12 },
-          metadata: { name: "explain", summary: "Explain a command" }
-        }
+          metadata: { name: "explain", summary: "Explain a command" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       console.log(decoratedStr.join(""));
-      expect(decoratedStr.join("")).toMatch(
-        `\u001b[32;1mkmdr\u001b[0m \u001b[36;1mexplain\u001b[0m`
-      );
+      expect(decoratedStr.join("")).toMatch(`\u001b[32;1mkmdr\u001b[0m \u001b[36;1mexplain\u001b[0m`);
     });
 
     test("ls --all", () => {
@@ -99,14 +97,14 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "ls"
-                  }
+                    text: "ls",
+                  },
                 ],
                 endPosition: { row: 0, column: 2 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [],
@@ -115,21 +113,21 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 3 },
                 type: "word",
-                text: "--all"
-              }
+                text: "--all",
+              },
             ],
             endPosition: { row: 0, column: 8 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 8 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
 
       const definitions = [
@@ -137,7 +135,7 @@ describe("A program source code is decorated", () => {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "ls", summary: "List directory contents" }
+          metadata: { name: "ls", summary: "List directory contents" },
         },
         {
           type: "option",
@@ -147,15 +145,13 @@ describe("A program source code is decorated", () => {
             summary: "Do not ignore entries starting with .",
             expectsArg: false,
             long: ["--all"],
-            short: ["-a"]
-          }
-        }
+            short: ["-a"],
+          },
+        },
       ];
       const decoratedStr = highlight.source(source, tree, definitions);
       console.log(decoratedStr.join(""));
-      expect(decoratedStr.join("")).toMatch(
-        `\u001b[32;1mls\u001b[0m \u001b[35m--all\u001b[0m`
-      );
+      expect(decoratedStr.join("")).toMatch(`\u001b[32;1mls\u001b[0m \u001b[35m--all\u001b[0m`);
     });
 
     test("sudo rm -rf", () => {
@@ -173,14 +169,14 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "sudo"
-                  }
+                    text: "sudo",
+                  },
                 ],
                 endPosition: { row: 0, column: 4 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [],
@@ -189,7 +185,7 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 5 },
                 type: "word",
-                text: "rm"
+                text: "rm",
               },
               {
                 children: [],
@@ -198,7 +194,7 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 8 },
                 type: "word",
-                text: "-rf"
+                text: "-rf",
               },
               {
                 children: [],
@@ -207,21 +203,21 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 12 },
                 type: "word",
-                text: "/"
-              }
+                text: "/",
+              },
             ],
             endPosition: { row: 0, column: 13 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 13 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
 
       const definitions = [
@@ -231,15 +227,14 @@ describe("A program source code is decorated", () => {
           endPosition: { row: 0, column: 4 },
           metadata: {
             name: "sudo",
-            summary:
-              "Execute a command with the privileges of a different user without switching environments"
-          }
+            summary: "Execute a command with the privileges of a different user without switching environments",
+          },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 5 },
           endPosition: { row: 0, column: 7 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
+          metadata: { name: "rm", summary: "Remove files or directories" },
         },
         {
           type: "option",
@@ -249,8 +244,8 @@ describe("A program source code is decorated", () => {
             summary: "Removes directories and their contents recursively",
             expectsArg: false,
             long: ["--recursive"],
-            short: ["-r", "-R"]
-          }
+            short: ["-r", "-R"],
+          },
         },
         {
           type: "option",
@@ -260,17 +255,16 @@ describe("A program source code is decorated", () => {
             summary: "Ignore nonexistent files and arguments, never prompt",
             expectsArg: false,
             long: ["--force"],
-            short: ["-f"]
-          }
-        }
+            short: ["-f"],
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.program(
-        "sudo"
-      )} ${consoleDecorators.program("rm")} -${consoleDecorators.option(
-        "r"
-      )}${consoleDecorators.option("f")}`;
+      const expectedStr = `${consoleDecorators.createToken("sudo", "program")} ${consoleDecorators.createToken(
+        "rm",
+        "program"
+      )} -${consoleDecorators.createToken("r", "option")}${consoleDecorators.createToken("f", "option")}`;
       console.log(decoratedStr.join(""));
 
       expect(decoratedStr.join("")).toMatch(expectedStr);
@@ -291,14 +285,14 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "mysql"
-                  }
+                    text: "mysql",
+                  },
                 ],
                 endPosition: { row: 0, column: 5 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [],
@@ -307,21 +301,21 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 6 },
                 type: "word",
-                text: "--user=root"
-              }
+                text: "--user=root",
+              },
             ],
             endPosition: { row: 0, column: 17 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 17 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
 
       const definitions = [
@@ -329,7 +323,7 @@ describe("A program source code is decorated", () => {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 5 },
-          metadata: { name: "mysql", summary: "Command-line tool" }
+          metadata: { name: "mysql", summary: "Command-line tool" },
         },
         {
           type: "option",
@@ -339,8 +333,8 @@ describe("A program source code is decorated", () => {
             summary: "The MySQL user name to use when connecting to the server",
             expectsArg: true,
             long: ["--user"],
-            short: ["-u"]
-          }
+            short: ["-u"],
+          },
         },
         {
           type: "optionArg",
@@ -350,17 +344,16 @@ describe("A program source code is decorated", () => {
             summary: "The MySQL user name to use when connecting to the server",
             long: ["--user"],
             short: ["-u"],
-            expectsValue: true
-          }
-        }
+            expectsValue: true,
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.program(
-        "mysql"
-      )} ${consoleDecorators.option("--user")}=${consoleDecorators.optionArg(
-        "root"
-      )}`;
+      const expectedStr = `${consoleDecorators.createToken("mysql", "program")} ${consoleDecorators.createToken(
+        "--user",
+        "option"
+      )}=${consoleDecorators.createToken("root", "optionArg")}`;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
@@ -380,14 +373,14 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "rm"
-                  }
+                    text: "rm",
+                  },
                 ],
                 endPosition: { row: 0, column: 2 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [],
@@ -396,28 +389,28 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 3 },
                 type: "word",
-                text: "-rZXVf"
-              }
+                text: "-rZXVf",
+              },
             ],
             endPosition: { row: 0, column: 9 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 9 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
+          metadata: { name: "rm", summary: "Remove files or directories" },
         },
         {
           type: "option",
@@ -427,8 +420,8 @@ describe("A program source code is decorated", () => {
             summary: "Removes directories and their contents recursively",
             expectsArg: false,
             long: ["--recursive"],
-            short: ["-r", "-R"]
-          }
+            short: ["-r", "-R"],
+          },
         },
         {
           type: "option",
@@ -438,15 +431,16 @@ describe("A program source code is decorated", () => {
             summary: "Ignore nonexistent files and arguments, never prompt",
             expectsArg: false,
             long: ["--force"],
-            short: ["-f"]
-          }
-        }
+            short: ["-f"],
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.program(
-        "rm"
-      )} -${consoleDecorators.option("r")}ZXV${consoleDecorators.option("f")}`;
+      const expectedStr = `${consoleDecorators.createToken("rm", "program")} -${consoleDecorators.createToken(
+        "r",
+        "option"
+      )}ZXV${consoleDecorators.createToken("f", "option")}`;
 
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
@@ -470,21 +464,21 @@ describe("A program source code is decorated", () => {
                             isMissing: false,
                             startPosition: { row: 0, column: 0 },
                             type: "word",
-                            text: "ls"
-                          }
+                            text: "ls",
+                          },
                         ],
                         endPosition: { row: 0, column: 2 },
                         hasError: false,
                         isMissing: false,
                         startPosition: { row: 0, column: 0 },
-                        type: "command_name"
-                      }
+                        type: "command_name",
+                      },
                     ],
                     endPosition: { row: 0, column: 2 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -493,7 +487,7 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 3 },
                     type: "&&",
-                    text: "&&"
+                    text: "&&",
                   },
                   {
                     children: [
@@ -506,28 +500,28 @@ describe("A program source code is decorated", () => {
                             isMissing: false,
                             startPosition: { row: 0, column: 6 },
                             type: "word",
-                            text: "rm"
-                          }
+                            text: "rm",
+                          },
                         ],
                         endPosition: { row: 0, column: 8 },
                         hasError: false,
                         isMissing: false,
                         startPosition: { row: 0, column: 6 },
-                        type: "command_name"
-                      }
+                        type: "command_name",
+                      },
                     ],
                     endPosition: { row: 0, column: 8 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 0, column: 6 },
-                    type: "command"
-                  }
+                    type: "command",
+                  },
                 ],
                 endPosition: { row: 0, column: 8 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "list"
+                type: "list",
               },
               {
                 children: [],
@@ -536,7 +530,7 @@ describe("A program source code is decorated", () => {
                 isMissing: false,
                 startPosition: { row: 0, column: 9 },
                 type: "&&",
-                text: "&&"
+                text: "&&",
               },
               {
                 children: [
@@ -549,66 +543,66 @@ describe("A program source code is decorated", () => {
                         isMissing: false,
                         startPosition: { row: 0, column: 11 },
                         type: "word",
-                        text: "cd"
-                      }
+                        text: "cd",
+                      },
                     ],
                     endPosition: { row: 0, column: 13 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 0, column: 11 },
-                    type: "command_name"
-                  }
+                    type: "command_name",
+                  },
                 ],
                 endPosition: { row: 0, column: 13 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 11 },
-                type: "command"
-              }
+                type: "command",
+              },
             ],
             endPosition: { row: 0, column: 13 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "list"
-          }
+            type: "list",
+          },
         ],
         endPosition: { row: 0, column: 13 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "ls", summary: "List directory contents" }
+          metadata: { name: "ls", summary: "List directory contents" },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 6 },
           endPosition: { row: 0, column: 8 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
+          metadata: { name: "rm", summary: "Remove files or directories" },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 11 },
           endPosition: { row: 0, column: 13 },
-          metadata: { name: "cd", summary: "Change working directory" }
-        }
+          metadata: { name: "cd", summary: "Change working directory" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
 
-      const expectedString = `${consoleDecorators.program(
-        "ls"
-      )} ${consoleDecorators.logicalOperator("&&")} ${consoleDecorators.program(
-        "rm"
-      )} ${consoleDecorators.logicalOperator("&&")}${consoleDecorators.program(
-        "cd"
-      )}`;
+      const expectedString = `${consoleDecorators.createToken("ls", "program")} ${consoleDecorators.createToken(
+        "&&",
+        "&&"
+      )} ${consoleDecorators.createToken("rm", "program")} ${consoleDecorators.createToken(
+        "&&",
+        "&&"
+      )}${consoleDecorators.createToken("cd", "program")}`;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toMatch(expectedString);
     });
@@ -631,14 +625,14 @@ describe("A program source code is decorated", () => {
 
                         startPosition: { row: 0, column: 0 },
                         type: "word",
-                        text: "ls"
-                      }
+                        text: "ls",
+                      },
                     ],
                     endPosition: { row: 0, column: 2 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
-                    type: "command_name"
+                    type: "command_name",
                   },
                   {
                     children: [],
@@ -647,14 +641,14 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 3 },
                     type: "word",
-                    text: "-alh"
-                  }
+                    text: "-alh",
+                  },
                 ],
                 endPosition: { row: 0, column: 7 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "command"
+                type: "command",
               },
               {
                 children: [
@@ -665,7 +659,7 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 8 },
                     type: ">",
-                    text: ">"
+                    text: ">",
                   },
                   {
                     children: [],
@@ -674,35 +668,35 @@ describe("A program source code is decorated", () => {
                     isMissing: false,
                     startPosition: { row: 0, column: 10 },
                     type: "word",
-                    text: "/dev/null"
-                  }
+                    text: "/dev/null",
+                  },
                 ],
                 endPosition: { row: 0, column: 19 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 8 },
-                type: "file_redirect"
-              }
+                type: "file_redirect",
+              },
             ],
             endPosition: { row: 0, column: 19 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "redirected_statement"
-          }
+            type: "redirected_statement",
+          },
         ],
         endPosition: { row: 0, column: 19 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "ls", summary: "List directory contents" }
+          metadata: { name: "ls", summary: "List directory contents" },
         },
         {
           type: "option",
@@ -712,8 +706,8 @@ describe("A program source code is decorated", () => {
             summary: "Don't ignore entries starting with .",
             expectsArg: false,
             long: ["--all"],
-            short: ["-a"]
-          }
+            short: ["-a"],
+          },
         },
         {
           type: "option",
@@ -723,21 +717,20 @@ describe("A program source code is decorated", () => {
             summary: "Uses a long listing format",
             expectsArg: false,
             long: [],
-            short: ["-l"]
-          }
+            short: ["-l"],
+          },
         },
         {
           type: "option",
           startPosition: { column: 6, row: 0 },
           endPosition: { column: 7, row: 0 },
           metadata: {
-            summary:
-              "Prints human readable sizes (e.g., 1K 234M 2G) with -l and/or -s",
+            summary: "Prints human readable sizes (e.g., 1K 234M 2G) with -l and/or -s",
             expectsArg: false,
             long: ["--human-readable"],
-            short: ["-h"]
-          }
-        }
+            short: ["-h"],
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
@@ -761,21 +754,21 @@ cd`;
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "ls"
-                  }
+                    text: "ls",
+                  },
                 ],
                 endPosition: { row: 0, column: 2 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
-              }
+                type: "command_name",
+              },
             ],
             endPosition: { row: 0, column: 2 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "command"
+            type: "command",
           },
           {
             children: [],
@@ -784,7 +777,7 @@ cd`;
             isMissing: false,
             startPosition: { row: 0, column: 3 },
             type: "\n",
-            text: "\n"
+            text: "\n",
           },
           {
             children: [
@@ -797,21 +790,21 @@ cd`;
                     isMissing: false,
                     startPosition: { row: 1, column: 0 },
                     type: "word",
-                    text: "rm"
-                  }
+                    text: "rm",
+                  },
                 ],
                 endPosition: { row: 1, column: 2 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 1, column: 0 },
-                type: "command_name"
-              }
+                type: "command_name",
+              },
             ],
             endPosition: { row: 1, column: 2 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 1, column: 0 },
-            type: "command"
+            type: "command",
           },
           {
             children: [],
@@ -820,7 +813,7 @@ cd`;
             isMissing: false,
             startPosition: { row: 1, column: 2 },
             type: "\n",
-            text: "\n"
+            text: "\n",
           },
           {
             children: [
@@ -833,54 +826,54 @@ cd`;
                     isMissing: false,
                     startPosition: { row: 2, column: 0 },
                     type: "word",
-                    text: "cd"
-                  }
+                    text: "cd",
+                  },
                 ],
                 endPosition: { row: 2, column: 2 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 2, column: 0 },
-                type: "command_name"
-              }
+                type: "command_name",
+              },
             ],
             endPosition: { row: 2, column: 2 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 2, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 2, column: 2 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "ls", summary: "List directory contents" }
+          metadata: { name: "ls", summary: "List directory contents" },
         },
         {
           type: "program",
           startPosition: { row: 1, column: 0 },
           endPosition: { row: 1, column: 2 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
+          metadata: { name: "rm", summary: "Remove files or directories" },
         },
         {
           type: "program",
           startPosition: { row: 2, column: 0 },
           endPosition: { row: 2, column: 2 },
-          metadata: { name: "cd", summary: "Change working directory" }
-        }
+          metadata: { name: "cd", summary: "Change working directory" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.program("ls")}
-${consoleDecorators.program("rm")}
-${consoleDecorators.program("cd")}`;
+      const expectedStr = `${consoleDecorators.createToken("ls", "program")}
+${consoleDecorators.createToken("rm", "program")}
+${consoleDecorators.createToken("cd", "program")}`;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
@@ -900,7 +893,7 @@ cd directory
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
                 type: "function",
-                text: "function"
+                text: "function",
               },
               {
                 children: [],
@@ -909,7 +902,7 @@ cd directory
                 isMissing: false,
                 startPosition: { row: 0, column: 9 },
                 type: "word",
-                text: "changeDirectory"
+                text: "changeDirectory",
               },
               {
                 children: [],
@@ -918,7 +911,7 @@ cd directory
                 isMissing: false,
                 startPosition: { row: 0, column: 24 },
                 type: "(",
-                text: "("
+                text: "(",
               },
               {
                 children: [],
@@ -927,7 +920,7 @@ cd directory
                 isMissing: false,
                 startPosition: { row: 0, column: 25 },
                 type: ")",
-                text: ")"
+                text: ")",
               },
               {
                 children: [
@@ -938,7 +931,7 @@ cd directory
                     isMissing: false,
                     startPosition: { row: 0, column: 27 },
                     type: "{",
-                    text: "{"
+                    text: "{",
                   },
                   {
                     children: [
@@ -951,14 +944,14 @@ cd directory
                             isMissing: false,
                             startPosition: { row: 1, column: 0 },
                             type: "word",
-                            text: "cd"
-                          }
+                            text: "cd",
+                          },
                         ],
                         endPosition: { row: 1, column: 2 },
                         hasError: false,
                         isMissing: false,
                         startPosition: { row: 1, column: 0 },
-                        type: "command_name"
+                        type: "command_name",
                       },
                       {
                         children: [],
@@ -967,14 +960,14 @@ cd directory
                         isMissing: false,
                         startPosition: { row: 1, column: 3 },
                         type: "word",
-                        text: "directory"
-                      }
+                        text: "directory",
+                      },
                     ],
                     endPosition: { row: 1, column: 12 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 1, column: 0 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -983,7 +976,7 @@ cd directory
                     isMissing: false,
                     startPosition: { row: 1, column: 12 },
                     type: "\n",
-                    text: "\n"
+                    text: "\n",
                   },
                   {
                     children: [],
@@ -992,46 +985,48 @@ cd directory
                     isMissing: false,
                     startPosition: { row: 2, column: 0 },
                     type: "}",
-                    text: "}"
-                  }
+                    text: "}",
+                  },
                 ],
                 endPosition: { row: 2, column: 1 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 27 },
-                type: "compound_statement"
-              }
+                type: "compound_statement",
+              },
             ],
             endPosition: { row: 2, column: 1 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "function_definition"
-          }
+            type: "function_definition",
+          },
         ],
         endPosition: { row: 2, column: 1 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 1, column: 0 },
           endPosition: { row: 1, column: 2 },
-          metadata: { name: "cd", summary: "Change working directory" }
-        }
+          metadata: { name: "cd", summary: "Change working directory" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.fn(
-        "function"
-      )} ${consoleDecorators.word("changeDirectory")}${consoleDecorators.parens(
-        "("
-      )}${consoleDecorators.parens(")")} ${consoleDecorators.braces("{")}
-${consoleDecorators.program("cd")} ${consoleDecorators.word("directory")}
-${consoleDecorators.braces("}")}`;
+      const expectedStr = `${consoleDecorators.createToken("function", "function")} ${consoleDecorators.createToken(
+        "changeDirectory",
+        "word"
+      )}${consoleDecorators.createToken("(", "(")}${consoleDecorators.createToken(
+        ")",
+        ")"
+      )} ${consoleDecorators.createToken("{", "{")}
+${consoleDecorators.createToken("cd", "program")} ${consoleDecorators.createToken("directory", "word")}
+${consoleDecorators.createToken("}", "}")}`;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
@@ -1048,7 +1043,7 @@ git commit`;
             isMissing: false,
             startPosition: { row: 0, column: 0 },
             type: "comment",
-            text: "# a comment"
+            text: "# a comment",
           },
           {
             children: [
@@ -1061,14 +1056,14 @@ git commit`;
                     isMissing: false,
                     startPosition: { row: 1, column: 0 },
                     type: "word",
-                    text: "git"
-                  }
+                    text: "git",
+                  },
                 ],
                 endPosition: { row: 1, column: 3 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 1, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [],
@@ -1077,28 +1072,28 @@ git commit`;
                 isMissing: false,
                 startPosition: { row: 1, column: 4 },
                 type: "word",
-                text: "commit"
-              }
+                text: "commit",
+              },
             ],
             endPosition: { row: 1, column: 10 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 1, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 1, column: 10 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 1, column: 0 },
           endPosition: { row: 1, column: 3 },
-          metadata: { name: "git", summary: "The stupid content tracker" }
+          metadata: { name: "git", summary: "The stupid content tracker" },
         },
         {
           type: "subcommand",
@@ -1106,14 +1101,14 @@ git commit`;
           endPosition: { row: 1, column: 10 },
           metadata: {
             name: "commit",
-            summary: "Record changes to the repository"
-          }
-        }
+            summary: "Record changes to the repository",
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.comment("# a comment")}
-${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
+      const expectedStr = `${consoleDecorators.createToken("# a comment", "comment")}
+${consoleDecorators.createToken("git", "program")} ${consoleDecorators.createToken("commit", "subcommand")}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -1132,7 +1127,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isMissing: false,
                     startPosition: { row: 0, column: 0 },
                     type: "(",
-                    text: "("
+                    text: "(",
                   },
                   {
                     children: [
@@ -1145,14 +1140,14 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isMissing: false,
                             startPosition: { row: 0, column: 1 },
                             type: "word",
-                            text: "ls"
-                          }
+                            text: "ls",
+                          },
                         ],
                         endPosition: { row: 0, column: 3 },
                         hasError: false,
                         isMissing: false,
                         startPosition: { row: 0, column: 1 },
-                        type: "command_name"
+                        type: "command_name",
                       },
                       {
                         children: [],
@@ -1161,14 +1156,14 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isMissing: false,
                         startPosition: { row: 0, column: 5 },
                         type: "word",
-                        text: "-ah"
-                      }
+                        text: "-ah",
+                      },
                     ],
                     endPosition: { row: 0, column: 8 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 0, column: 1 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -1177,7 +1172,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isMissing: false,
                     startPosition: { row: 0, column: 9 },
                     type: ";",
-                    text: ";"
+                    text: ";",
                   },
                   {
                     children: [
@@ -1190,21 +1185,21 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isMissing: false,
                             startPosition: { row: 0, column: 11 },
                             type: "word",
-                            text: "rm"
-                          }
+                            text: "rm",
+                          },
                         ],
                         endPosition: { row: 0, column: 13 },
                         hasError: false,
                         isMissing: false,
                         startPosition: { row: 0, column: 11 },
-                        type: "command_name"
-                      }
+                        type: "command_name",
+                      },
                     ],
                     endPosition: { row: 0, column: 13 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 0, column: 11 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -1213,14 +1208,14 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isMissing: false,
                     startPosition: { row: 0, column: 14 },
                     type: ")",
-                    text: ")"
-                  }
+                    text: ")",
+                  },
                 ],
                 endPosition: { row: 0, column: 15 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 0 },
-                type: "subshell"
+                type: "subshell",
               },
               {
                 children: [],
@@ -1229,7 +1224,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isMissing: false,
                 startPosition: { row: 0, column: 16 },
                 type: "|",
-                text: "|"
+                text: "|",
               },
               {
                 children: [
@@ -1242,14 +1237,14 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isMissing: false,
                         startPosition: { row: 0, column: 18 },
                         type: "word",
-                        text: "sort"
-                      }
+                        text: "sort",
+                      },
                     ],
                     endPosition: { row: 0, column: 22 },
                     hasError: false,
                     isMissing: false,
                     startPosition: { row: 0, column: 18 },
-                    type: "command_name"
+                    type: "command_name",
                   },
                   {
                     children: [],
@@ -1258,7 +1253,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isMissing: false,
                     startPosition: { row: 0, column: 23 },
                     type: "word",
-                    text: "-n"
+                    text: "-n",
                   },
                   {
                     children: [],
@@ -1267,28 +1262,28 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isMissing: false,
                     startPosition: { row: 0, column: 26 },
                     type: "word",
-                    text: "-u"
-                  }
+                    text: "-u",
+                  },
                 ],
                 endPosition: { row: 0, column: 28 },
                 hasError: false,
                 isMissing: false,
                 startPosition: { row: 0, column: 18 },
-                type: "command"
-              }
+                type: "command",
+              },
             ],
             endPosition: { row: 0, column: 28 },
             hasError: false,
             isMissing: false,
             startPosition: { row: 0, column: 0 },
-            type: "pipeline"
-          }
+            type: "pipeline",
+          },
         ],
         endPosition: { row: 0, column: 29 },
         hasError: false,
         isMissing: false,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
 
       const definitions = [
@@ -1296,7 +1291,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
           type: "program",
           startPosition: { row: 0, column: 1 },
           endPosition: { row: 0, column: 3 },
-          metadata: { name: "ls", summary: "List directory contents" }
+          metadata: { name: "ls", summary: "List directory contents" },
         },
         {
           type: "option",
@@ -1306,32 +1301,31 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             summary: "Don't ignore entries starting with .",
             expectsArg: false,
             long: ["--all"],
-            short: ["-a"]
-          }
+            short: ["-a"],
+          },
         },
         {
           type: "option",
           startPosition: { column: 7, row: 0 },
           endPosition: { column: 8, row: 0 },
           metadata: {
-            summary:
-              "Prints human readable sizes (e.g., 1K 234M 2G) with -l and/or -s",
+            summary: "Prints human readable sizes (e.g., 1K 234M 2G) with -l and/or -s",
             expectsArg: false,
             long: ["--human-readable"],
-            short: ["-h"]
-          }
+            short: ["-h"],
+          },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 11 },
           endPosition: { row: 0, column: 13 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
+          metadata: { name: "rm", summary: "Remove files or directories" },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 18 },
           endPosition: { row: 0, column: 22 },
-          metadata: { name: "sort", summary: "Sort lines of text files" }
+          metadata: { name: "sort", summary: "Sort lines of text files" },
         },
         {
           type: "option",
@@ -1341,8 +1335,8 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             summary: "Compare according to string numerical value",
             expectsArg: false,
             long: ["--numeric-sort"],
-            short: ["-n"]
-          }
+            short: ["-n"],
+          },
         },
         {
           type: "option",
@@ -1352,26 +1346,31 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             summary: "Check for strict ordering",
             expectsArg: false,
             long: ["--unique"],
-            short: ["-u"]
-          }
-        }
+            short: ["-u"],
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // (ls  -ah ; rm ) | sort -n -u
       console.log(decoratedStr.join(""));
 
-      const expectedStr = `${consoleDecorators.parens(
-        "("
-      )}${consoleDecorators.program("ls")}  -${consoleDecorators.option(
-        "a"
-      )}${consoleDecorators.option("h")} ${consoleDecorators.semicolon(
-        ";"
-      )} ${consoleDecorators.program("rm")} ${consoleDecorators.parens(
-        ")"
-      )} ${consoleDecorators.pipeline("|")} ${consoleDecorators.program(
-        "sort"
-      )} ${consoleDecorators.option("-n")} ${consoleDecorators.option("-u")}`;
+      const expectedStr = `${consoleDecorators.createToken("(", "(")}${consoleDecorators.createToken(
+        "ls",
+        "program"
+      )}  -${consoleDecorators.createToken("a", "option")}${consoleDecorators.createToken(
+        "h",
+        "option"
+      )} ${consoleDecorators.createToken(";", ";")} ${consoleDecorators.createToken(
+        "rm",
+        "program"
+      )} ${consoleDecorators.createToken(")", ")")} ${consoleDecorators.createToken(
+        "|",
+        "|"
+      )} ${consoleDecorators.createToken("sort", "program")} ${consoleDecorators.createToken(
+        "-n",
+        "option"
+      )} ${consoleDecorators.createToken("-u", "option")}`;
 
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
@@ -1390,7 +1389,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: false,
                 startPosition: { row: 0, column: 0 },
                 type: "for",
-                text: "for"
+                text: "for",
               },
               {
                 children: [],
@@ -1400,7 +1399,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: true,
                 startPosition: { row: 0, column: 4 },
                 type: "variable_name",
-                text: "i"
+                text: "i",
               },
               {
                 children: [],
@@ -1410,7 +1409,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: false,
                 startPosition: { row: 0, column: 6 },
                 type: "in",
-                text: "in"
+                text: "in",
               },
               {
                 children: [
@@ -1422,7 +1421,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 9 },
                     type: "`",
-                    text: "`"
+                    text: "`",
                   },
                   {
                     children: [
@@ -1436,15 +1435,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isNamed: true,
                             startPosition: { row: 0, column: 10 },
                             type: "word",
-                            text: "seq"
-                          }
+                            text: "seq",
+                          },
                         ],
                         endPosition: { row: 0, column: 13 },
                         hasError: false,
                         isMissing: false,
                         isNamed: true,
                         startPosition: { row: 0, column: 10 },
-                        type: "command_name"
+                        type: "command_name",
                       },
                       {
                         children: [],
@@ -1454,7 +1453,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isNamed: true,
                         startPosition: { row: 0, column: 14 },
                         type: "word",
-                        text: "1"
+                        text: "1",
                       },
                       {
                         children: [],
@@ -1464,15 +1463,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isNamed: true,
                         startPosition: { row: 0, column: 16 },
                         type: "word",
-                        text: "10"
-                      }
+                        text: "10",
+                      },
                     ],
                     endPosition: { row: 0, column: 18 },
                     hasError: false,
                     isMissing: false,
                     isNamed: true,
                     startPosition: { row: 0, column: 10 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -1482,15 +1481,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 18 },
                     type: "`",
-                    text: "`"
-                  }
+                    text: "`",
+                  },
                 ],
                 endPosition: { row: 0, column: 19 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 9 },
-                type: "command_substitution"
+                type: "command_substitution",
               },
               {
                 children: [],
@@ -1500,7 +1499,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: false,
                 startPosition: { row: 0, column: 19 },
                 type: ";",
-                text: ";"
+                text: ";",
               },
               {
                 children: [
@@ -1512,7 +1511,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 21 },
                     type: "do",
-                    text: "do"
+                    text: "do",
                   },
                   {
                     children: [
@@ -1526,15 +1525,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isNamed: true,
                             startPosition: { row: 0, column: 24 },
                             type: "word",
-                            text: "echo"
-                          }
+                            text: "echo",
+                          },
                         ],
                         endPosition: { row: 0, column: 28 },
                         hasError: false,
                         isMissing: false,
                         isNamed: true,
                         startPosition: { row: 0, column: 24 },
-                        type: "command_name"
+                        type: "command_name",
                       },
                       {
                         children: [
@@ -1546,7 +1545,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isNamed: false,
                             startPosition: { row: 0, column: 29 },
                             type: "$",
-                            text: "$"
+                            text: "$",
                           },
                           {
                             children: [],
@@ -1556,23 +1555,23 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isNamed: true,
                             startPosition: { row: 0, column: 30 },
                             type: "variable_name",
-                            text: "i"
-                          }
+                            text: "i",
+                          },
                         ],
                         endPosition: { row: 0, column: 31 },
                         hasError: false,
                         isMissing: false,
                         isNamed: true,
                         startPosition: { row: 0, column: 29 },
-                        type: "simple_expansion"
-                      }
+                        type: "simple_expansion",
+                      },
                     ],
                     endPosition: { row: 0, column: 31 },
                     hasError: false,
                     isMissing: false,
                     isNamed: true,
                     startPosition: { row: 0, column: 24 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -1582,7 +1581,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 31 },
                     type: ";",
-                    text: ";"
+                    text: ";",
                   },
                   {
                     children: [],
@@ -1592,63 +1591,66 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 33 },
                     type: "done",
-                    text: "done"
-                  }
+                    text: "done",
+                  },
                 ],
                 endPosition: { row: 0, column: 37 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 21 },
-                type: "do_group"
-              }
+                type: "do_group",
+              },
             ],
             endPosition: { row: 0, column: 37 },
             hasError: false,
             isMissing: false,
             isNamed: true,
             startPosition: { row: 0, column: 0 },
-            type: "for_statement"
-          }
+            type: "for_statement",
+          },
         ],
         endPosition: { row: 0, column: 37 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 10 },
           endPosition: { row: 0, column: 13 },
-          metadata: { name: "seq", summary: "Print sequences of numbers" }
+          metadata: { name: "seq", summary: "Print sequences of numbers" },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 24 },
           endPosition: { row: 0, column: 28 },
-          metadata: { name: "echo", summary: "Display a line of text" }
-        }
+          metadata: { name: "echo", summary: "Display a line of text" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       console.log(decoratedStr.join(""));
       // for i in `seq 1 10`; do echo $i; done
-      const expectedStr = `${consoleDecorators.for(
-        "for"
-      )} ${consoleDecorators.variableName("i")} ${consoleDecorators.in(
-        "in"
-      )} ${consoleDecorators.backtick("`")}${consoleDecorators.program(
-        "seq"
-      )} 1 10${consoleDecorators.backtick("`")}${consoleDecorators.semicolon(
-        ";"
-      )} ${consoleDecorators.do("do")} ${consoleDecorators.program(
-        "echo"
-      )} $${consoleDecorators.variableName("i")}${consoleDecorators.semicolon(
-        ";"
-      )} ${consoleDecorators.done("done")}`;
+      const expectedStr = `${consoleDecorators.createToken("for", "for")} ${consoleDecorators.createToken(
+        "i",
+        "variable_name"
+      )} ${consoleDecorators.createToken("in", "in")} ${consoleDecorators.createToken(
+        "`",
+        "`"
+      )}${consoleDecorators.createToken("seq", "program")} 1 10${consoleDecorators.createToken(
+        "`",
+        "`"
+      )}${consoleDecorators.createToken(";", ";")} ${consoleDecorators.createToken(
+        "do",
+        "do"
+      )} ${consoleDecorators.createToken("echo", "program")} $${consoleDecorators.createToken(
+        "i",
+        "variable_name"
+      )}${consoleDecorators.createToken(";", ";")} ${consoleDecorators.createToken("done", "done")}`;
 
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
@@ -1671,15 +1673,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isNamed: true,
                         startPosition: { row: 0, column: 0 },
                         type: "word",
-                        text: "rm"
-                      }
+                        text: "rm",
+                      },
                     ],
                     endPosition: { row: 0, column: 2 },
                     hasError: false,
                     isMissing: false,
                     isNamed: true,
                     startPosition: { row: 0, column: 0 },
-                    type: "command_name"
+                    type: "command_name",
                   },
                   {
                     children: [],
@@ -1689,15 +1691,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 3 },
                     type: "word",
-                    text: "file"
-                  }
+                    text: "file",
+                  },
                 ],
                 endPosition: { row: 0, column: 7 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 0 },
-                type: "command"
+                type: "command",
               },
               {
                 children: [
@@ -1709,7 +1711,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 8 },
                     type: "file_descriptor",
-                    text: "2"
+                    text: "2",
                   },
                   {
                     children: [],
@@ -1719,7 +1721,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 9 },
                     type: ">",
-                    text: ">"
+                    text: ">",
                   },
                   {
                     children: [],
@@ -1729,51 +1731,51 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 11 },
                     type: "word",
-                    text: "error.log"
-                  }
+                    text: "error.log",
+                  },
                 ],
                 endPosition: { row: 0, column: 20 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 8 },
-                type: "file_redirect"
-              }
+                type: "file_redirect",
+              },
             ],
             endPosition: { row: 0, column: 20 },
             hasError: false,
             isMissing: false,
             isNamed: true,
             startPosition: { row: 0, column: 0 },
-            type: "redirected_statement"
-          }
+            type: "redirected_statement",
+          },
         ],
         endPosition: { row: 0, column: 20 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
-        }
+          metadata: { name: "rm", summary: "Remove files or directories" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // rm file 2> error.log
       console.log(decoratedStr.join(""));
-      const expectedStr = `${consoleDecorators.program(
-        "rm"
-      )} ${consoleDecorators.word("file")} ${consoleDecorators.fileDescriptor(
-        "2"
-      )}${consoleDecorators.redirect(">")} ${consoleDecorators.word(
-        "error.log"
-      )}`;
+      const expectedStr = `${consoleDecorators.createToken("rm", "program")} ${consoleDecorators.createToken(
+        "file",
+        "word"
+      )} ${consoleDecorators.createToken("2", "file_descriptor")}${consoleDecorators.createToken(
+        ">",
+        ">"
+      )} ${consoleDecorators.createToken("error.log", "word")}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -1793,7 +1795,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 0 },
                     type: "variable_name",
-                    text: "NODE_ENV"
+                    text: "NODE_ENV",
                   },
                   {
                     children: [],
@@ -1803,7 +1805,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 8 },
                     type: "=",
-                    text: "="
+                    text: "=",
                   },
                   {
                     children: [],
@@ -1813,15 +1815,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 9 },
                     type: "word",
-                    text: "production"
-                  }
+                    text: "production",
+                  },
                 ],
                 endPosition: { row: 0, column: 19 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 0 },
-                type: "variable_assignment"
+                type: "variable_assignment",
               },
               {
                 children: [
@@ -1833,15 +1835,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 20 },
                     type: "word",
-                    text: "npm"
-                  }
+                    text: "npm",
+                  },
                 ],
                 endPosition: { row: 0, column: 23 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 20 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [],
@@ -1851,7 +1853,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: true,
                 startPosition: { row: 0, column: 24 },
                 type: "word",
-                text: "run"
+                text: "run",
               },
               {
                 children: [],
@@ -1861,30 +1863,30 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: true,
                 startPosition: { row: 0, column: 28 },
                 type: "word",
-                text: "start"
-              }
+                text: "start",
+              },
             ],
             endPosition: { row: 0, column: 33 },
             hasError: false,
             isMissing: false,
             isNamed: true,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 33 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 20 },
           endPosition: { row: 0, column: 23 },
-          metadata: { name: "npm", summary: "javascript package manager" }
+          metadata: { name: "npm", summary: "javascript package manager" },
         },
         {
           type: "subcommand",
@@ -1892,21 +1894,21 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
           endPosition: { row: 0, column: 27 },
           metadata: {
             name: "run-script",
-            summary: "Run arbitrary package scripts"
-          }
-        }
+            summary: "Run arbitrary package scripts",
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       console.log(decoratedStr.join(""));
       // NODE_ENV=production npm run start
-      const expectedStr = `${consoleDecorators.variableName(
-        "NODE_ENV"
-      )}${consoleDecorators.equal("=")}${consoleDecorators.word(
-        "production"
-      )} ${consoleDecorators.program("npm")} ${consoleDecorators.subcommand(
-        "run"
-      )} ${consoleDecorators.word("start")}`;
+      const expectedStr = `${consoleDecorators.createToken("NODE_ENV", "variable_name")}${consoleDecorators.createToken(
+        "=",
+        "="
+      )}${consoleDecorators.createToken("production", "word")} ${consoleDecorators.createToken(
+        "npm",
+        "program"
+      )} ${consoleDecorators.createToken("run", "subcommand")} ${consoleDecorators.createToken("start", "word")}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -1926,15 +1928,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "rm"
-                  }
+                    text: "rm",
+                  },
                 ],
                 endPosition: { row: 0, column: 2 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [
@@ -1946,7 +1948,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 3 },
                     type: "$(",
-                    text: "$("
+                    text: "$(",
                   },
                   {
                     children: [
@@ -1960,23 +1962,23 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isNamed: true,
                             startPosition: { row: 0, column: 5 },
                             type: "word",
-                            text: "ls"
-                          }
+                            text: "ls",
+                          },
                         ],
                         endPosition: { row: 0, column: 7 },
                         hasError: false,
                         isMissing: false,
                         isNamed: true,
                         startPosition: { row: 0, column: 5 },
-                        type: "command_name"
-                      }
+                        type: "command_name",
+                      },
                     ],
                     endPosition: { row: 0, column: 7 },
                     hasError: false,
                     isMissing: false,
                     isNamed: true,
                     startPosition: { row: 0, column: 5 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -1986,54 +1988,53 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 7 },
                     type: ")",
-                    text: ")"
-                  }
+                    text: ")",
+                  },
                 ],
                 endPosition: { row: 0, column: 8 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 3 },
-                type: "command_substitution"
-              }
+                type: "command_substitution",
+              },
             ],
             endPosition: { row: 0, column: 8 },
             hasError: false,
             isMissing: false,
             isNamed: true,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 8 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
+          metadata: { name: "rm", summary: "Remove files or directories" },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 5 },
           endPosition: { row: 0, column: 7 },
-          metadata: { name: "ls", summary: "List directory contents" }
-        }
+          metadata: { name: "ls", summary: "List directory contents" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       console.log(decoratedStr.join(""));
-      const expectedStr = `${consoleDecorators.program(
-        "rm"
-      )} ${consoleDecorators.parens("$(")}${consoleDecorators.program(
-        "ls"
-      )}${consoleDecorators.parens(")")}`;
+      const expectedStr = `${consoleDecorators.createToken("rm", "program")} ${consoleDecorators.createToken(
+        "$(",
+        "$("
+      )}${consoleDecorators.createToken("ls", "program")}${consoleDecorators.createToken(")", ")")}`;
 
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
@@ -2052,7 +2053,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: false,
                 startPosition: { row: 0, column: 0 },
                 type: "while",
-                text: "while"
+                text: "while",
               },
               {
                 children: [
@@ -2066,23 +2067,23 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isNamed: true,
                         startPosition: { row: 0, column: 6 },
                         type: "word",
-                        text: "true"
-                      }
+                        text: "true",
+                      },
                     ],
                     endPosition: { row: 0, column: 10 },
                     hasError: false,
                     isMissing: false,
                     isNamed: true,
                     startPosition: { row: 0, column: 6 },
-                    type: "command_name"
-                  }
+                    type: "command_name",
+                  },
                 ],
                 endPosition: { row: 0, column: 10 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 6 },
-                type: "command"
+                type: "command",
               },
               {
                 children: [],
@@ -2092,7 +2093,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: false,
                 startPosition: { row: 0, column: 10 },
                 type: ";",
-                text: ";"
+                text: ";",
               },
               {
                 children: [
@@ -2104,7 +2105,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 12 },
                     type: "do",
-                    text: "do"
+                    text: "do",
                   },
                   {
                     children: [
@@ -2118,23 +2119,23 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                             isNamed: true,
                             startPosition: { row: 0, column: 15 },
                             type: "word",
-                            text: "rm"
-                          }
+                            text: "rm",
+                          },
                         ],
                         endPosition: { row: 0, column: 17 },
                         hasError: false,
                         isMissing: false,
                         isNamed: true,
                         startPosition: { row: 0, column: 15 },
-                        type: "command_name"
-                      }
+                        type: "command_name",
+                      },
                     ],
                     endPosition: { row: 0, column: 17 },
                     hasError: false,
                     isMissing: false,
                     isNamed: true,
                     startPosition: { row: 0, column: 15 },
-                    type: "command"
+                    type: "command",
                   },
                   {
                     children: [],
@@ -2144,7 +2145,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 17 },
                     type: ";",
-                    text: ";"
+                    text: ";",
                   },
                   {
                     children: [],
@@ -2154,57 +2155,60 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 19 },
                     type: "done",
-                    text: "done"
-                  }
+                    text: "done",
+                  },
                 ],
                 endPosition: { row: 0, column: 23 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 12 },
-                type: "do_group"
-              }
+                type: "do_group",
+              },
             ],
             endPosition: { row: 0, column: 23 },
             hasError: false,
             isMissing: false,
             isNamed: true,
             startPosition: { row: 0, column: 0 },
-            type: "while_statement"
-          }
+            type: "while_statement",
+          },
         ],
         endPosition: { row: 0, column: 23 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 6 },
           endPosition: { row: 0, column: 10 },
-          metadata: { name: "true", summary: "Return true value" }
+          metadata: { name: "true", summary: "Return true value" },
         },
         {
           type: "program",
           startPosition: { row: 0, column: 15 },
           endPosition: { row: 0, column: 17 },
-          metadata: { name: "rm", summary: "Remove files or directories" }
-        }
+          metadata: { name: "rm", summary: "Remove files or directories" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // while true; do rm; done
       console.log(decoratedStr.join(""));
-      const expectedStr = `${consoleDecorators.while(
-        "while"
-      )} ${consoleDecorators.program("true")}${consoleDecorators.semicolon(
+      const expectedStr = `${consoleDecorators.createToken("while", "while")} ${consoleDecorators.createToken(
+        "true",
+        "program"
+      )}${consoleDecorators.createToken(";", ";")} ${consoleDecorators.createToken(
+        "do",
+        "do"
+      )} ${consoleDecorators.createToken("rm", "program")}${consoleDecorators.createToken(
+        ";",
         ";"
-      )} ${consoleDecorators.do("do")} ${consoleDecorators.program(
-        "rm"
-      )}${consoleDecorators.semicolon(";")} ${consoleDecorators.done("done")}`;
+      )} ${consoleDecorators.createToken("done", "done")}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -2224,15 +2228,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "cd"
-                  }
+                    text: "cd",
+                  },
                 ],
                 endPosition: { row: 0, column: 2 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [
@@ -2244,7 +2248,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 3 },
                     type: '"',
-                    text: '"'
+                    text: '"',
                   },
                   {
                     children: [],
@@ -2254,49 +2258,48 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 20 },
                     type: '"',
-                    text: '"'
-                  }
+                    text: '"',
+                  },
                 ],
                 endPosition: { row: 0, column: 21 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 3 },
-                type: "string"
-              }
+                type: "string",
+              },
             ],
             endPosition: { row: 0, column: 21 },
             hasError: false,
             isMissing: false,
             isNamed: true,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 21 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "cd", summary: "Change working directory" }
-        }
+          metadata: { name: "cd", summary: "Change working directory" },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // cd "dir with spaces/"
       console.log(decoratedStr.join(""));
-      const expectedStr = `${consoleDecorators.program(
-        "cd"
-      )} ${consoleDecorators.doubleQuotes(`"`)}${consoleDecorators.word(
-        `dir with spaces/`
-      )}${consoleDecorators.doubleQuotes(`"`)}`;
+      const expectedStr = `${consoleDecorators.createToken("cd", "program")} ${consoleDecorators.createToken(
+        `"`,
+        `"`
+      )}${consoleDecorators.createToken(`dir with spaces/`, "word")}${consoleDecorators.createToken(`"`, `"`)}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -2316,15 +2319,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 0 },
                     type: "word",
-                    text: "echo"
-                  }
+                    text: "echo",
+                  },
                 ],
                 endPosition: { row: 0, column: 4 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 0 },
-                type: "command_name"
+                type: "command_name",
               },
               {
                 children: [
@@ -2336,7 +2339,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 5 },
                     type: '"',
-                    text: '"'
+                    text: '"',
                   },
                   {
                     children: [
@@ -2348,7 +2351,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isNamed: false,
                         startPosition: { row: 0, column: 11 },
                         type: "$(",
-                        text: "$("
+                        text: "$(",
                       },
                       {
                         children: [
@@ -2362,23 +2365,23 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                                 isNamed: true,
                                 startPosition: { row: 0, column: 13 },
                                 type: "word",
-                                text: "date"
-                              }
+                                text: "date",
+                              },
                             ],
                             endPosition: { row: 0, column: 17 },
                             hasError: false,
                             isMissing: false,
                             isNamed: true,
                             startPosition: { row: 0, column: 13 },
-                            type: "command_name"
-                          }
+                            type: "command_name",
+                          },
                         ],
                         endPosition: { row: 0, column: 17 },
                         hasError: false,
                         isMissing: false,
                         isNamed: true,
                         startPosition: { row: 0, column: 13 },
-                        type: "command"
+                        type: "command",
                       },
                       {
                         children: [],
@@ -2388,15 +2391,15 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                         isNamed: false,
                         startPosition: { row: 0, column: 17 },
                         type: ")",
-                        text: ")"
-                      }
+                        text: ")",
+                      },
                     ],
                     endPosition: { row: 0, column: 18 },
                     hasError: false,
                     isMissing: false,
                     isNamed: true,
                     startPosition: { row: 0, column: 11 },
-                    type: "command_substitution"
+                    type: "command_substitution",
                   },
                   {
                     children: [],
@@ -2406,38 +2409,38 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: false,
                     startPosition: { row: 0, column: 18 },
                     type: '"',
-                    text: '"'
-                  }
+                    text: '"',
+                  },
                 ],
                 endPosition: { row: 0, column: 19 },
                 hasError: false,
                 isMissing: false,
                 isNamed: true,
                 startPosition: { row: 0, column: 5 },
-                type: "string"
-              }
+                type: "string",
+              },
             ],
             endPosition: { row: 0, column: 19 },
             hasError: false,
             isMissing: false,
             isNamed: true,
             startPosition: { row: 0, column: 0 },
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 19 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions = [
         {
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 4 },
-          metadata: { name: "echo", summary: "Display a line of text" }
+          metadata: { name: "echo", summary: "Display a line of text" },
         },
         {
           type: "program",
@@ -2445,21 +2448,21 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
           endPosition: { row: 0, column: 17 },
           metadata: {
             name: "date",
-            summary: "Print or set the system date and time"
-          }
-        }
+            summary: "Print or set the system date and time",
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
       // echo "Text $(date)"
       console.log(decoratedStr.join(""));
-      const expectedStr = `${consoleDecorators.program(
-        "echo"
-      )} ${consoleDecorators.doubleQuotes(`"`)}Text ${consoleDecorators.parens(
-        "$("
-      )}${consoleDecorators.program("date")}${consoleDecorators.parens(
-        ")"
-      )}${consoleDecorators.doubleQuotes(`"`)}`;
+      const expectedStr = `${consoleDecorators.createToken("echo", "program")} ${consoleDecorators.createToken(
+        `"`,
+        `"`
+      )}Text ${consoleDecorators.createToken("$(", "$(")}${consoleDecorators.createToken(
+        "date",
+        "program"
+      )}${consoleDecorators.createToken(")", ")")}${consoleDecorators.createToken(`"`, `"`)}`;
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -2479,22 +2482,20 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             isNamed: true,
             startPosition: { row: 0, column: 0 },
             type: "comment",
-            text: "# Simple hello world example:"
-          }
+            text: "# Simple hello world example:",
+          },
         ],
         endPosition: { row: 1, column: 0 },
         hasError: false,
         isMissing: false,
         isNamed: true,
         startPosition: { row: 0, column: 0 },
-        type: "program"
+        type: "program",
       });
       const definitions: NodeDefinition[] = [];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.comment(
-        "# Simple hello world example:"
-      )}
+      const expectedStr = `${consoleDecorators.createToken("# Simple hello world example:", "comment")}
 `;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toBe(expectedStr);
@@ -2520,8 +2521,8 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                     isNamed: true,
                     startPosition: { row: 0, column: 0 },
                     text: "ls",
-                    type: "word"
-                  }
+                    type: "word",
+                  },
                 ],
                 endPosition: { row: 0, column: 2 },
                 hasError: false,
@@ -2529,7 +2530,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: true,
                 startPosition: { row: 0, column: 0 },
                 text: "ls",
-                type: "command_name"
+                type: "command_name",
               },
               {
                 childCount: 0,
@@ -2540,8 +2541,8 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
                 isNamed: true,
                 startPosition: { row: 0, column: 3 },
                 text: "-rtl",
-                type: "word"
-              }
+                type: "word",
+              },
             ],
             endPosition: { row: 0, column: 7 },
             hasError: false,
@@ -2549,8 +2550,8 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             isNamed: true,
             startPosition: { row: 0, column: 0 },
             text: "ls -rtl",
-            type: "command"
-          }
+            type: "command",
+          },
         ],
         endPosition: { row: 0, column: 8 },
         hasError: false,
@@ -2558,7 +2559,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
         isNamed: true,
         startPosition: { row: 0, column: 0 },
         text: "ls -rtl\t",
-        type: "program"
+        type: "program",
       });
 
       const definitions = [
@@ -2566,7 +2567,7 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
           type: "program",
           startPosition: { row: 0, column: 0 },
           endPosition: { row: 0, column: 2 },
-          metadata: { name: "ls", summary: "List directory contents" }
+          metadata: { name: "ls", summary: "List directory contents" },
         },
         {
           type: "option",
@@ -2576,8 +2577,8 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             summary: "Reverse order while sorting",
             expectsArg: false,
             long: ["--reverse"],
-            short: ["-r"]
-          }
+            short: ["-r"],
+          },
         },
         {
           type: "option",
@@ -2587,8 +2588,8 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             summary: "Sorts by modification time, newest first",
             expectsArg: false,
             long: [],
-            short: ["-t"]
-          }
+            short: ["-t"],
+          },
         },
         {
           type: "option",
@@ -2598,15 +2599,13 @@ ${consoleDecorators.program("git")} ${consoleDecorators.subcommand("commit")}`;
             summary: "Uses a long listing format",
             expectsArg: false,
             long: [],
-            short: ["-l"]
-          }
-        }
+            short: ["-l"],
+          },
+        },
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      const expectedStr = `${consoleDecorators.comment(
-        "# Simple hello world example:"
-      )}
+      const expectedStr = `${consoleDecorators.createToken("# Simple hello world example:", "comment")}
 `;
       console.log(decoratedStr.join(""));
       expect(decoratedStr.join("")).toBe(expectedStr);

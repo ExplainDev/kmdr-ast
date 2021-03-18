@@ -1,7 +1,7 @@
 import ASTNode from "./astNode";
 import ASTNodePoint from "./astNodePoint";
 import Highlight from "./highlight";
-import { Decorators, NodeDefinition, DefinitionFeedback } from "./interfaces";
+import { ThemeDecorators, NodeDefinition, DefinitionFeedback } from "./interfaces";
 import Tree from "./tree";
 import TreeCursor from "./treeCursor";
 
@@ -26,5 +26,5 @@ export {
   ASTNodePoint,
   Highlight,
   NodeDefinition,
-  Decorators,
+  ThemeDecorators,
 };
