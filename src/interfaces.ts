@@ -43,7 +43,6 @@ export interface DefinitionFeedback {
 }
 
 export interface ThemeDecorators<T extends Element | Text | string | any> {
-  language: "bash" | "css";
   createToken(text: string, type?: string, definition?: NodeDefinition): T;
 }
 
