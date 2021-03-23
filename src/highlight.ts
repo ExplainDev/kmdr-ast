@@ -21,12 +21,12 @@ export default class Highlight<R extends string | Text | Element | any> {
   /**
    * Text-based (ansi colors) highlighting or HTML
    */
-  private mode: string;
+  private language: Language;
   private decorators: ThemeDecorators<R>;
 
-  constructor(decorators: ThemeDecorators<R>, mode: string) {
+  constructor(decorators: ThemeDecorators<R>, language: Language) {
     this.decorators = decorators;
-    this.mode = mode;
+    this.language = language;
   }
 
   public source(source: string, tree: Tree, definitions?: NodeDefinition[]): R[] {
@@ -41,11 +41,17 @@ export default class Highlight<R extends string | Text | Element | any> {
 
     for (let column = 0; column < source.length; column++) {
       const char = source[column];
-      if (char === `\n`) {
+      if (char === "\n") {
         if (inRange) {
           // For CSS
           decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
           decoratedStrings.push(this.decorateText("\n", "new_line"));
+        } else if (nodes[currentToken]?.type === "text") {
+          // For HTML
+          decoratedStrings.push(this.decorateText("\n", "new_line"));
+          if (currentToken < nodes.length || nodes[currentToken]?.text !== "\n") {
+            currentToken += 1;
+          }
         } else {
           decoratedStrings.push(this.decorateText("\n", "new_line"));
 
@@ -60,6 +66,12 @@ export default class Highlight<R extends string | Text | Element | any> {
         columnAtLine = 0;
         inRange = false;
         continue;
+      }
+
+      if (nodes[currentToken].type === "raw_text" && nodes[currentToken].text === "") {
+        currentToken += 1;
+        wordInRange = "";
+        inRange = false;
       }
 
       try {
