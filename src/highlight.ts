@@ -41,10 +41,10 @@ export default class Highlight<R extends string | Text | Element | any> {
           // For CSS
           decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
           decoratedStrings.push(this.decorateText("\n", "new_line"));
-        } else if (nodes[currentToken]?.type === "text") {
+        } else if (nodes[currentToken]?.type === "text" || nodes[currentToken]?.type === "raw_text") {
           // For HTML
           decoratedStrings.push(this.decorateText("\n", "new_line"));
-          if (currentToken < nodes.length || nodes[currentToken]?.text !== "\n") {
+          if (currentToken < nodes.length || nodes[currentToken]?.text === "\n") {
             currentToken += 1;
           }
         } else {

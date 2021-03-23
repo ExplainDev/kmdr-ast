@@ -7,6 +7,7 @@ export default class HTMLDecorators implements ThemeDecorators<string> {
       case "<":
       case "</":
       case "<!":
+      case "/>":
       case ">": {
         return this.angleBrackets(text);
       }
