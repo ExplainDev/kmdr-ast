@@ -18,15 +18,10 @@ export default class Highlight<R extends string | Text | Element | any> {
     return matches;
   }
 
-  /**
-   * Text-based (ansi colors) highlighting or HTML
-   */
-  private language: Language;
   private decorators: ThemeDecorators<R>;
 
-  constructor(decorators: ThemeDecorators<R>, language: Language) {
+  constructor(decorators: ThemeDecorators<R>) {
     this.decorators = decorators;
-    this.language = language;
   }
 
   public source(source: string, tree: Tree, definitions?: NodeDefinition[]): R[] {

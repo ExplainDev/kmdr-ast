@@ -14,7 +14,7 @@ describe("A program source code is decorated", () => {
   describe("Bash Language", () => {
     beforeAll(() => {
       consoleDecorators = new BashDecorators();
-      highlight = new Highlight(consoleDecorators, "console");
+      highlight = new Highlight(consoleDecorators);
     });
 
     test("kmdr explain", () => {
@@ -2617,7 +2617,7 @@ ${consoleDecorators.createToken("git", "program")} ${consoleDecorators.createTok
   describe("CSS Language", () => {
     beforeAll(() => {
       consoleDecorators = new CSSDecorators();
-      highlight = new Highlight(consoleDecorators, "console");
+      highlight = new Highlight(consoleDecorators);
     });
 
     test("color: white;\ntext-decoration: underline;\nbackground-color: blue;\nposition:relative;", () => {
@@ -3174,8 +3174,6 @@ ${color.red("footer")} ${color.red("p")} ${color.red("{")}
         ","
       )} ${color.white("Arvo")}${color.white(",")} ${color.white("serif")}${color.white(";")}
 ${color.red("}")}`;
-      console.log("expected string");
-      console.log(expectedStr);
       expect(decoratedStr.join("")).toMatch(expectedStr);
     });
   });
@@ -3183,7 +3181,7 @@ ${color.red("}")}`;
   describe("HTML Language", () => {
     beforeAll(() => {
       consoleDecorators = new HTMLDecorators();
-      highlight = new Highlight(consoleDecorators, "html");
+      highlight = new Highlight(consoleDecorators);
     });
 
     test("<div>text</div>", () => {
@@ -3332,8 +3330,7 @@ ${color.red("}")}`;
       const expectedStr = `${color.red("<")}${color.red("div")}${color.red(">")}text${color.red("</")}${color.red(
         "div"
       )}${color.red(">")}`;
-      console.log("expected string");
-      console.log(expectedStr);
+
       expect(decoratedStr.join("")).toMatch(expectedStr);
     });
 
