@@ -1,6 +1,6 @@
 import { ASTNode } from ".";
 import ASTNodePoint from "./astNodePoint";
-import { ThemeDecorators, NodeDefinition } from "./interfaces";
+import { NodeDefinition, ThemeDecorators } from "./interfaces";
 import Tree from "./tree";
 
 export default class Highlight<R extends string | Text | Element | any> {
@@ -167,113 +167,5 @@ export default class Highlight<R extends string | Text | Element | any> {
 
   private decorateText(text: string, type?: string, definition?: NodeDefinition): R {
     return this.decorators.createToken(text, type, definition);
-    // switch (type) {
-    //   case "`":
-    //     return this.decorators.backtick(text, node);
-    //   case `"`:
-    //     return this.decorators.doubleQuotes(text);
-    //   case "|":
-    //     return this.decorators.pipeline(text, definition);
-    //   case "&&":
-    //   case "||":
-    //   case "!":
-    //     return this.decorators.logicalOperator(text, definition);
-    //   case "(":
-    //   case "$(":
-    //   case ")":
-    //     return this.decorators.parens(text);
-    //   case "{":
-    //   case `\${`:
-    //   case "}":
-    //     return this.decorators.braces(text);
-    //   case "[[":
-    //   case "]]":
-    //   case "[":
-    //   case "]":
-    //     return this.decorators.brackets(text);
-    //   case ">":
-    //   case ">&":
-    //   case ">>":
-    //   case "&>":
-    //     return this.decorators.redirect(text, definition);
-    //   case ";":
-    //     return this.decorators.semicolon(text, definition);
-    //   case "=":
-    //     return this.decorators.equal(text, definition);
-    //   case "==":
-    //   case "!=":
-    //   case "<":
-    //   case "<=":
-    //   case ">=":
-    //     return this.decorators.relationalOperator(text, definition);
-    //   case "argument":
-    //     return this.decorators.argument(text, definition);
-    //   case "command":
-    //     return this.decorators.command(text);
-    //   case "command_name":
-    //   case "program":
-    //     return this.decorators.program(text, definition);
-    //   case "comment":
-    //     return this.decorators.comment(text, definition);
-    //   case "do":
-    //     return this.decorators.do(text, definition);
-    //   case "done":
-    //     return this.decorators.done(text, definition);
-    //   case "file_descriptor":
-    //     return this.decorators.fileDescriptor(text, definition);
-    //   case "for":
-    //     return this.decorators.for(text, definition);
-    //   case "function":
-    //     return this.decorators.fn(text, definition);
-    //   case "if":
-    //     return this.decorators.if(text, definition);
-    //   case "else":
-    //     return this.decorators.else(text, definition);
-    //   case "elif":
-    //     return this.decorators.elif(text, definition);
-    //   case "fi":
-    //     return this.decorators.fi(text, definition);
-    //   case "in":
-    //     return this.decorators.in(text, definition);
-    //   case "missing_program":
-    //     return this.decorators.missingProgram(text, definition);
-    //   case "option":
-    //     return this.decorators.option(text, definition);
-    //   case "optionArg":
-    //     return this.decorators.optionArg(text, definition);
-    //   case "pipeline":
-    //     return this.decorators.bitwiseOperator(text, definition);
-    //   case "subcommand":
-    //     return this.decorators.subcommand(text, definition);
-    //   case "test_operator":
-    //     return this.decorators.testOperator(text, definition);
-    //   case "then":
-    //     return this.decorators.then(text, definition);
-    //   case "variable_name":
-    //     return this.decorators.variableName(text, definition);
-    //   case "while":
-    //     return this.decorators.while(text, definition);
-    //   /////////////////////////////
-    //   // CSS
-    //   ////////////////////////////
-    //   case "property": {
-    //     if (this.decorators.property) return this.decorators.property(text, definition);
-    //     return this.decorators.word(text, definition);
-    //   }
-    //   case "class_name": {
-    //     if (this.decorators.className) return this.decorators.className(text, definition);
-    //     return this.decorators.word(text, definition);
-    //   }
-    //   case "*": {
-    //     if (this.decorators.universalSelector) return this.decorators.universalSelector(text, definition);
-    //     return this.decorators.word(text, definition);
-    //   }
-    //   case "tag_name": {
-    //     if (this.decorators.tagName) return this.decorators.tagName(text, definition);
-    //     return this.decorators.word(text, definition);
-    //   }
-    //   default:
-    //     return this.decorators.word(text, definition);
-    // }
   }
 }

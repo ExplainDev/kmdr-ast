@@ -1,10 +1,10 @@
+import color from "ansi-colors";
 import ASTNodePoint from "../src/astNodePoint";
 import Highlight from "../src/highlight";
+import { NodeDefinition, ThemeDecorators } from "../src/interfaces";
 import Tree from "../src/tree";
 import BashDecorators from "./BashDecorators";
-import { ThemeDecorators, NodeDefinition } from "../src/interfaces";
 import CSSDecorators from "./CSSDecorators";
-import color from "ansi-colors";
 import HTMLDecorators from "./HTMLDecorators";
 
 describe("A program source code is decorated", () => {
