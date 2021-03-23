@@ -50,7 +50,7 @@ export default class Highlight<R extends string | Text | Element | any> {
         } else {
           decoratedStrings.push(this.decorateText("\n", "new_line"));
 
-          if (currentToken < nodes.length && nodes[currentToken].type === "\n") {
+          if (currentToken < nodes.length && nodes[currentToken]?.type === "\n") {
             currentToken += 1;
           }
         }
@@ -63,7 +63,7 @@ export default class Highlight<R extends string | Text | Element | any> {
         continue;
       }
 
-      if (nodes[currentToken].type === "raw_text" && nodes[currentToken].text === "") {
+      if (nodes[currentToken]?.type === "raw_text" && nodes[currentToken]?.text === "") {
         currentToken += 1;
         wordInRange = "";
         inRange = false;
