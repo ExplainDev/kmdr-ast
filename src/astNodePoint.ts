@@ -1,5 +1,4 @@
 import { NodePoint } from "./interfaces";
-import { ASTNode } from ".";
 
 /**
  *

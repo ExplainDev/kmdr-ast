@@ -1,8 +1,6 @@
 import { NodeDefinition, ThemeDecorators } from "../src/interfaces";
 
 export default class BashDecorators implements ThemeDecorators<string> {
-  public readonly language: "bash" | "css" = "bash";
-
   public argument(text: string, definition?: NodeDefinition) {
     return `${text}`;
   }
