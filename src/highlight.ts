@@ -39,13 +39,26 @@ export default class Highlight<R extends string | Text | Element | any> {
       if (char === "\n") {
         if (inRange) {
           // For CSS
-          decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
-          decoratedStrings.push(this.decorateText("\n", "new_line"));
+          wordInRange += char;
+
+          if (wordInRange === nodes[currentToken].text) {
+            decoratedStrings.push(...this.decorateNode(wordInRange, nodes[currentToken], definitions));
+
+            currentToken += 1;
+            inRange = false;
+            wordInRange = "";
+          }
         } else if (nodes[currentToken]?.type === "text" || nodes[currentToken]?.type === "raw_text") {
           // For HTML
-          decoratedStrings.push(this.decorateText("\n", "new_line"));
-          if (currentToken < nodes.length || nodes[currentToken]?.text === "\n") {
+
+          if (nodes[currentToken]?.text === "\n") {
+            decoratedStrings.push(this.decorateText("\n", "new_line"));
             currentToken += 1;
+            wordInRange = "";
+            inRange = false;
+          } else {
+            wordInRange += char;
+            inRange = true;
           }
         } else {
           decoratedStrings.push(this.decorateText("\n", "new_line"));
@@ -53,13 +66,11 @@ export default class Highlight<R extends string | Text | Element | any> {
           if (currentToken < nodes.length && nodes[currentToken]?.type === "\n") {
             currentToken += 1;
           }
+          wordInRange = "";
         }
-
-        wordInRange = "";
 
         row++;
         columnAtLine = 0;
-        inRange = false;
         continue;
       }
 
@@ -105,6 +116,12 @@ export default class Highlight<R extends string | Text | Element | any> {
     return decoratedStrings;
   }
 
+  /**
+   * Sometimes a single node contains multiple definitions. This function does that trick.
+   * @param text
+   * @param node
+   * @param definitions
+   */
   private decorateNode(text: string, node: ASTNode, definitions?: NodeDefinition[]): R[] {
     const decoratedStrings = [];
     const { startPosition } = node;
@@ -112,18 +129,20 @@ export default class Highlight<R extends string | Text | Element | any> {
     let inRange = false;
     let wordInRange = "";
 
-    let matches: NodeDefinition[] = [];
+    const matches: NodeDefinition[] = definitions ? Highlight.findNodeDefinition(node, definitions) : [];
 
-    if (definitions) {
-      matches = Highlight.findNodeDefinition(node, definitions);
-    }
-
-    if (matches.length === 0) {
+    if (matches.length === 0 && text.includes("\n") === false) {
       decoratedStrings.push(this.decorateText(text, node.type));
     } else {
       for (let column = 0; column < text.length; column++) {
         // get the current character
         const char = text[column];
+
+        if (char === "\n") {
+          decoratedStrings.push(this.decorateText(char, "new_line"));
+          continue;
+        }
+
         // calculate the column position relative to the startPosition
         // of the node
         const columnInNode = startPosition.column + column;

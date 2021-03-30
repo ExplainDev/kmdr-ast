@@ -81,7 +81,7 @@ describe("A program source code is decorated", () => {
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
+
       expect(decoratedStr.join("")).toMatch(`\u001b[32;1mkmdr\u001b[0m \u001b[36;1mexplain\u001b[0m`);
     });
 
@@ -153,7 +153,7 @@ describe("A program source code is decorated", () => {
         },
       ];
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
+
       expect(decoratedStr.join("")).toMatch(`\u001b[32;1mls\u001b[0m \u001b[35m--all\u001b[0m`);
     });
 
@@ -268,7 +268,6 @@ describe("A program source code is decorated", () => {
         "rm",
         "program"
       )} -${consoleDecorators.createToken("r", "option")}${consoleDecorators.createToken("f", "option")}`;
-      console.log(decoratedStr.join(""));
 
       expect(decoratedStr.join("")).toMatch(expectedStr);
     });
@@ -357,7 +356,7 @@ describe("A program source code is decorated", () => {
         "--user",
         "option"
       )}=${consoleDecorators.createToken("root", "optionArg")}`;
-      console.log(decoratedStr.join(""));
+
       expect(decoratedStr.join("")).toEqual(expectedStr);
     });
 
@@ -3164,16 +3163,20 @@ footer p {
       ];
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
-      const expectedStr = `${color.gray("/*")}
-${color.gray(" Shared styles")}
-${color.gray("*/")}
+      const expectedStr = `${color.gray("/")}${color.gray("*")}
+${color.gray(" ")}${color.gray("S")}${color.gray("h")}${color.gray("a")}${color.gray("r")}${color.gray("e")}${color.gray(
+        "d"
+      )}${color.gray(" ")}${color.gray("s")}${color.gray("t")}${color.gray("y")}${color.gray("l")}${color.gray(
+        "e"
+      )}${color.gray("s")}
+${color.gray("*")}${color.gray("/")}
 
 ${color.red("footer")} ${color.red("p")} ${color.red("{")}
 \t${color.blue("font")}${color.white(":")} 100${color.white("%")} ${color.white("Rockwell")}${color.white(
         ","
       )} ${color.white("Arvo")}${color.white(",")} ${color.white("serif")}${color.white(";")}
 ${color.red("}")}`;
+
       expect(decoratedStr.join("")).toMatch(expectedStr);
     });
   });
@@ -3326,7 +3329,7 @@ ${color.red("}")}`;
 
       const source = "<div>text</div>";
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
+
       const expectedStr = `${color.red("<")}${color.red("div")}${color.red(">")}text${color.red("</")}${color.red(
         "div"
       )}${color.red(">")}`;
@@ -3892,7 +3895,7 @@ ${color.red("}")}`;
   <li>item</li>
 </ul>`;
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
+
       const expectedStr = `${color.gray("<!-- comment -->")}
 ${color.red("<")}${color.red("ul")}${color.red(">")}
   ${color.red("<")}${color.red("li")}${color.red(">")}item${color.red("</")}${color.red("li")}${color.red(">")}
@@ -4190,15 +4193,15 @@ ${color.red("</")}${color.red("ul")}${color.red(">")}`;
 
       const source = `<!doctype html>
 <html lang="en">
-...
+  ...
 </html>`;
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
+
       const expectedStr = `${color.red("<!")}${color.red("doctype")} html${color.red(">")}
 ${color.red("<")}${color.red("html")} ${color.green("lang")}${color.white("=")}${color.white('"')}${color.magenta(
         "en"
       )}${color.white('"')}${color.red(">")}
-...
+  ...
 ${color.red("</")}${color.red("html")}${color.red(">")}`;
 
       expect(decoratedStr.join("")).toMatch(expectedStr);
@@ -4951,7 +4954,7 @@ ${color.red("</")}${color.red("html")}${color.red(">")}`;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>`;
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
+
       const expectedStr = `${color.red("<")}${color.red("script")} ${color.green("src")}${color.white("=")}${color.white(
         '"'
       )}${color.magenta("https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js")}${color.white(
@@ -5570,7 +5573,7 @@ ${color.red("<")}${color.red("script")} ${color.green("src")}${color.white("=")}
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>`;
 
       const decoratedStr = highlight.source(source, tree, definitions);
-      console.log(decoratedStr.join(""));
+
       const expectedStr = `${color.red("<")}${color.red("script")} ${color.green("src")}${color.white("=")}${color.white(
         '"'
       )}${color.magenta("https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js")}${color.white(
@@ -5587,6 +5590,453 @@ ${color.red("<")}${color.red("script")} ${color.green("src")}${color.white("=")}
       )}${color.white('"')} ${color.green("crossorigin")}${color.white("=")}${color.white('"')}${color.magenta(
         "anonymous"
       )}${color.white('"')}${color.red(">")}${color.red("</")}${color.red("script")}${color.red(">")}`;
+
+      expect(decoratedStr.join("")).toMatch(expectedStr);
+    });
+
+    test("text nodes with multiple lines", () => {
+      const tree = new Tree({
+        childCount: 5,
+        children: [
+          {
+            childCount: 0,
+            children: [],
+            endPosition: { row: 0, column: 25 },
+            hasError: false,
+            isMissing: false,
+            isNamed: true,
+            startPosition: { row: 0, column: 0 },
+            text: "<!-- scientific names -->",
+            type: "comment",
+          },
+          {
+            childCount: 0,
+            children: [],
+            endPosition: { row: 1, column: 0 },
+            hasError: false,
+            isMissing: false,
+            isNamed: true,
+            startPosition: { row: 0, column: 25 },
+            text: "\n",
+            type: "text",
+          },
+          {
+            childCount: 5,
+            children: [
+              {
+                childCount: 3,
+                children: [
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 1, column: 1 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 1, column: 0 },
+                    text: "<",
+                    type: "<",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 1, column: 2 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 1, column: 1 },
+                    text: "p",
+                    type: "tag_name",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 1, column: 3 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 1, column: 2 },
+                    text: ">",
+                    type: ">",
+                  },
+                ],
+                endPosition: { row: 1, column: 3 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 1, column: 0 },
+                text: "<p>",
+                type: "start_tag",
+              },
+              {
+                childCount: 0,
+                children: [],
+                endPosition: { row: 2, column: 33 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 1, column: 3 },
+                text: "\n  The Ruby-throated Hummingbird (",
+                type: "text",
+              },
+              {
+                childCount: 3,
+                children: [
+                  {
+                    childCount: 3,
+                    children: [
+                      {
+                        childCount: 0,
+                        children: [],
+                        endPosition: { row: 2, column: 34 },
+                        hasError: false,
+                        isMissing: false,
+                        isNamed: false,
+                        startPosition: { row: 2, column: 33 },
+                        text: "<",
+                        type: "<",
+                      },
+                      {
+                        childCount: 0,
+                        children: [],
+                        endPosition: { row: 2, column: 35 },
+                        hasError: false,
+                        isMissing: false,
+                        isNamed: true,
+                        startPosition: { row: 2, column: 34 },
+                        text: "i",
+                        type: "tag_name",
+                      },
+                      {
+                        childCount: 0,
+                        children: [],
+                        endPosition: { row: 2, column: 36 },
+                        hasError: false,
+                        isMissing: false,
+                        isNamed: false,
+                        startPosition: { row: 2, column: 35 },
+                        text: ">",
+                        type: ">",
+                      },
+                    ],
+                    endPosition: { row: 2, column: 36 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 2, column: 33 },
+                    text: "<i>",
+                    type: "start_tag",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 2, column: 56 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 2, column: 36 },
+                    text: "Archilochus colubris",
+                    type: "text",
+                  },
+                  {
+                    childCount: 3,
+                    children: [
+                      {
+                        childCount: 0,
+                        children: [],
+                        endPosition: { row: 2, column: 58 },
+                        hasError: false,
+                        isMissing: false,
+                        isNamed: false,
+                        startPosition: { row: 2, column: 56 },
+                        text: "</",
+                        type: "</",
+                      },
+                      {
+                        childCount: 0,
+                        children: [],
+                        endPosition: { row: 2, column: 59 },
+                        hasError: false,
+                        isMissing: false,
+                        isNamed: true,
+                        startPosition: { row: 2, column: 58 },
+                        text: "i",
+                        type: "tag_name",
+                      },
+                      {
+                        childCount: 0,
+                        children: [],
+                        endPosition: { row: 2, column: 60 },
+                        hasError: false,
+                        isMissing: false,
+                        isNamed: false,
+                        startPosition: { row: 2, column: 59 },
+                        text: ">",
+                        type: ">",
+                      },
+                    ],
+                    endPosition: { row: 2, column: 60 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 2, column: 56 },
+                    text: "</i>",
+                    type: "end_tag",
+                  },
+                ],
+                endPosition: { row: 2, column: 60 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 2, column: 33 },
+                text: "<i>Archilochus colubris</i>",
+                type: "element",
+              },
+              {
+                childCount: 0,
+                children: [],
+                endPosition: { row: 4, column: 0 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 2, column: 60 },
+                text: ")\n  is the most common hummingbird in Eastern North America.\n",
+                type: "text",
+              },
+              {
+                childCount: 3,
+                children: [
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 4, column: 2 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 4, column: 0 },
+                    text: "</",
+                    type: "</",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 4, column: 3 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 4, column: 2 },
+                    text: "p",
+                    type: "tag_name",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 4, column: 4 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 4, column: 3 },
+                    text: ">",
+                    type: ">",
+                  },
+                ],
+                endPosition: { row: 4, column: 4 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 4, column: 0 },
+                text: "</p>",
+                type: "end_tag",
+              },
+            ],
+            endPosition: { row: 4, column: 4 },
+            hasError: false,
+            isMissing: false,
+            isNamed: true,
+            startPosition: { row: 1, column: 0 },
+            text:
+              "<p>\n  The Ruby-throated Hummingbird (<i>Archilochus colubris</i>)\n  is the most common hummingbird in Eastern North America.\n</p>",
+            type: "element",
+          },
+          {
+            childCount: 0,
+            children: [],
+            endPosition: { row: 5, column: 0 },
+            hasError: false,
+            isMissing: false,
+            isNamed: true,
+            startPosition: { row: 4, column: 4 },
+            text: "\n",
+            type: "text",
+          },
+          {
+            childCount: 3,
+            children: [
+              {
+                childCount: 3,
+                children: [
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 5, column: 1 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 5, column: 0 },
+                    text: "<",
+                    type: "<",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 5, column: 4 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 5, column: 1 },
+                    text: "div",
+                    type: "tag_name",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 5, column: 5 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 5, column: 4 },
+                    text: ">",
+                    type: ">",
+                  },
+                ],
+                endPosition: { row: 5, column: 5 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 5, column: 0 },
+                text: "<div>",
+                type: "start_tag",
+              },
+              {
+                childCount: 0,
+                children: [],
+                endPosition: { row: 5, column: 9 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 5, column: 5 },
+                text: "test",
+                type: "text",
+              },
+              {
+                childCount: 3,
+                children: [
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 5, column: 11 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 5, column: 9 },
+                    text: "</",
+                    type: "</",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 5, column: 14 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: true,
+                    startPosition: { row: 5, column: 11 },
+                    text: "div",
+                    type: "tag_name",
+                  },
+                  {
+                    childCount: 0,
+                    children: [],
+                    endPosition: { row: 5, column: 15 },
+                    hasError: false,
+                    isMissing: false,
+                    isNamed: false,
+                    startPosition: { row: 5, column: 14 },
+                    text: ">",
+                    type: ">",
+                  },
+                ],
+                endPosition: { row: 5, column: 15 },
+                hasError: false,
+                isMissing: false,
+                isNamed: true,
+                startPosition: { row: 5, column: 9 },
+                text: "</div>",
+                type: "end_tag",
+              },
+            ],
+            endPosition: { row: 5, column: 15 },
+            hasError: false,
+            isMissing: false,
+            isNamed: true,
+            startPosition: { row: 5, column: 0 },
+            text: "<div>test</div>",
+            type: "element",
+          },
+        ],
+        endPosition: { row: 5, column: 15 },
+        hasError: false,
+        isMissing: false,
+        isNamed: true,
+        startPosition: { row: 0, column: 0 },
+        text:
+          "<!-- scientific names -->\n<p>\n  The Ruby-throated Hummingbird (<i>Archilochus colubris</i>)\n  is the most common hummingbird in Eastern North America.\n</p>\n<div>test</div>",
+        type: "fragment",
+      });
+
+      const definitions = [
+        {
+          type: "element",
+          metadata: { name: "<p>", summary: "Represents a paragraph" },
+          endPosition: { row: 1, column: 2 },
+          startPosition: { row: 1, column: 1 },
+        },
+        {
+          type: "element",
+          metadata: {
+            name: "<i>",
+            summary:
+              "Represents a range of text that is set off from the normal text for some reason, such as idiomatic text, technical terms, taxonomical designations, among others",
+          },
+          endPosition: { row: 2, column: 35 },
+          startPosition: { row: 2, column: 34 },
+        },
+        {
+          type: "element",
+          metadata: {
+            name: "<div>",
+            summary:
+              "Generic container for flow content. It has no effect on the content or layout until styled in some way using CSS (e.g. styling is directly applied to it, or some kind of layout model like Flexbox is applied to its parent element)",
+          },
+          endPosition: { row: 5, column: 4 },
+          startPosition: { row: 5, column: 1 },
+        },
+      ];
+
+      const source = `<!-- scientific names -->
+<p>
+  The Ruby-throated Hummingbird (<i>Archilochus colubris</i>)
+  is the most common hummingbird in Eastern North America.
+</p>`;
+
+      const decoratedStr = highlight.source(source, tree, definitions);
+
+      const expectedStr = `${color.gray("<!-- scientific names -->")}
+${color.red("<")}${color.red("p")}${color.red(">")}
+  The Ruby-throated Hummingbird (${color.red("<")}${color.red("i")}${color.red(">")}Archilochus colubris${color.red(
+        "</"
+      )}${color.red("i")}${color.red(">")})
+  is the most common hummingbird in Eastern North America.
+${color.red("</")}${color.red("p")}${color.red(">")}`;
 
       expect(decoratedStr.join("")).toMatch(expectedStr);
     });
